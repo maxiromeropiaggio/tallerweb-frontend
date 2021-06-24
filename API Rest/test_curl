@@ -1,0 +1,1 @@
+curl -i -X POST -H "Content-Type: application/json" -d '{ "email":"aguantemaxi_98@hotmail.com","monto": 1,"status": "PAYED", "ipn_response" : {"source":"","raw":""}}' localhost:3000/
