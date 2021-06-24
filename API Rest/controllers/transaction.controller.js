@@ -5,12 +5,10 @@ var transController = {};
 
 //get all transactions
 transController.list = function(req, res) {
-    find({}).exec(function(err, trans){
-        if (err) {
-            console.log ( "Error: ", err);
-            return err;
-        }
-        res.json(trans);
+    Transaction.find({}).exec(function(err, trans){
+        if (err) return res.status(500).json({ mensaje: "Error en el servidor", err });
+
+        return res.json(trans);
     });
 };
 
@@ -20,26 +18,42 @@ transController.save = function(req, res) {
         email: req.body.email,
         monto: req.body.monto, status: req.body.status, ipn_response: { source: req.body.source, raw: req.body.raw }, date: Date.now()
      });
-
      newTransaction.save(function (err,trans) {
-        if (err) return next(err);
-        res.json(trans);
+        if (err) return res.status(500).json({ mensaje: "Error en el servidor", err });
+        return res.json(trans);
      });
 };
 
 //update one transaction
 transController.update = function(req, res) {
-    findByIdAndUpdate(req.params.id,req.body, (err,trans)=>{
-        if(err) return next(err);
-        res.json(trans);
+
+    if(req.params.id == ' '){
+        return res.status(400).json({ mensaje: "Ingrese ID de Transaccion" });
+
+    }
+
+    Transaction.findByIdAndUpdate(req.params.id,req.body, (err,trans)=>{
+        if (!trans) return res.status(400).json({ mensaje: "Transaccion inexistente" });
+
+        if (err) return res.status(500).json({ mensaje: "Error en el servidor", err });
+
+        return res.status(200).json({mensaje:'Transaccion modificada'});
     });
 };
 
 //delete one transaction
 transController.deleteOne = function(req, res) {
-    findByIdAndRemove(req.params.id,req.body, (err,trans)=>{
-        if(err) return next(err);
-        res.json(trans);
+    if(req.params.id == ' '){
+        return res.status(400).json({ mensaje: "Ingrese ID de Transaccion" });
+
+    }
+
+    Transaction.findByIdAndRemove(req.params.id,req.body, (err,trans)=>{
+        if (!trans) return res.status(400).json({ mensaje: "Transaccion inexistente" });
+
+        if (err) return res.status(500).json({ mensaje: "Error en el servidor", err });
+
+        return res.status(200).json({mensaje:'Transaccion eliminada'});
     });
 };
 
