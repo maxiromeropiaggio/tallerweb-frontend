@@ -1,50 +1,24 @@
-var express = require('express');
-var router = express.Router();
-var Transaction = require('../models/transaction.model');
+import { Router } from 'express';
+var router = Router();
+import { transController } from '../controllers/transaction.controller.js';
 
-//obtener todos las transacciones
-router.get('/',(req,res,next)=>{
-
-    Transaction.find({}, function(err, trans) {
-        if (err) return next(err);
-        res.json(trans);
-     });
-
+router.get('/', (req,res)=>{
+    transController.list(req, res);
 });
 
-//guardar transaccion
-router.post('/', (req,res,next)=>{
-
-    var newtransaction = new Transaction({
-        email: req.body.email,
-        monto: req.body.monto, status: req.body.status, ipn_response: { source: req.body.source, raw: req.body.raw }, date: Date.now()
-     });
-
-     newtransaction.save(function (err,trans) {
-        if (err) return next(err);
-        res.json(trans);
-     });
+router.post('/', (req,res)=>{
+    transController.save(req, res);
 });
 
 
-//update 
-router.put('/:id', (req,res,next)=>{
-
-    Transaction.findByIdAndUpdate(req.params.id,req.body, (err,trans)=>{
-        if(err) return next(err);
-        res.json(trans);
-    });
+router.put('/:id', (req,res)=>{
+    transController.update(req, res);
 });
 
-//delete 
-router.delete('/:id', (req,res,next)=>{
+router.delete('/:id', (req,res)=>{
 
-    Transaction.findByIdAndRemove(req.params.id,req.body, (err,trans)=>{
-        if(err) return next(err);
-        res.json(trans);
-    });
+    transController.deleteOne(req, res);
 });
 
 
-module.exports = router;
-
+export default router;

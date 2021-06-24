@@ -1,49 +1,23 @@
-var mongoose = require('mongoose');
-var Transaction = require('./models/transaction.model.js');
-var express = require('express');
-var bodyParser = require('body-parser');
-var transactions = require('./routes/transaction.route')
+import pkg_mongoose from 'mongoose';
+const { connect } = pkg_mongoose;
+import express from 'express';
+import pkg_bodyparser from 'body-parser';
+const { json, urlencoded } = pkg_bodyparser;
+import transactions from './routes/transaction.route.js';
+import users from './routes/user.route.js';
 
 
-
-
-mongoose.connect('mongodb://localhost:27017/test', function (err) {
+connect('mongodb://localhost:27017/test', function (err) {
    if (err) throw err;
-   console.log('Successfully connected');
-
-   
-/*  ONLY FOR TEST
-   var transaction1 = new Transaction({
-      email: "matecocido@gmail.com",
-      monto: 10, status: 'PAGO', ipn_response: { source: 'MERCADOPAGO' }, date: Date.now()
-   });
-
-   transaction1.save(function (err) {
-      if (err) return handleError(err);
-      console.log('guardado');
-   });
-
-   let id;
-
-   Transaction.findOne({}, function
-      (err, succ) {
-      if (err) return handleError(err);
-      console.log('Se ha encontrado una transaccion', succ);
-      id = succ._id;
-   });
-
-   Transaction.updateMany(id, { $set: { 'ipn_response.raw': 'xd' } }, (err, succ) => {
-      console.log('Actualiza2 pagos');
-   });
- */
-
+   console.log('Successfully connected to mongoDB.');
 });
 
 var app = express();
-app.use(bodyParser.json()); 
-app.use(bodyParser.urlencoded({ extended: false })); 
+app.use(json()); 
+app.use(urlencoded({ extended: false })); 
 
 app.use('/transactions', transactions);
+app.use('/users', users);
 
 app.listen(3000);
 console.log("Listening at port 3000 to requirements...");

@@ -1,15 +1,14 @@
-const { Double } = require('mongodb');
-const mongoose = require('mongoose');
+import pkg_mongoose from 'mongoose';
+const { Schema, model } = pkg_mongoose;
 
 
-var userSchema = new mongoose.Schema({
+var userSchema = new Schema({
     email: String,
     name: String,
     surname: String,
     phone: Number,
     birth_date: { type: Date, default: Date.now },
-    balance: Double,
-    fixed_term = []
+    balance: Number
 });
 
-module.exports = mongoose.model('User', userSchema);
+export default model('User', userSchema);

@@ -1,67 +1,26 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../models/user.model');
+import { Router } from 'express';
+var router = Router();
+import { userController } from '../controllers/user.controller.js';
 
-//obtener todos los usuarios
-router.get('/',(req,res,next)=>{
-
-    User.find(req.body.email, function(err, trans) {
-        if (err) return next(err);
-        res.json(trans);
-     });
-
+router.get('/',(req,res)=>{
+    userController.list(req, res);
 });
 
-//obtener el usuario dado por su email
-router.get('/:email',(req,res,next)=>{
-
-    User.find(req.params.email, function(err, trans) {
-        if (err) return next(err);
-        res.json(trans);
-     });
-
+router.get('/:email',(req,res)=>{
+    userController.listOne(req, res);
 });
 
-//almacenar un usuario
-router.post('/', (req,res,next)=>{
+router.post('/', (req,res)=>{
+    userController.save(req, res);
+});
 
-    User.find(req.body.email, (err, trans)=>{
-        if(err) return next(err);
-        
-        if (trans != null)
-            console.log("Cannot create new user, because another one exists with the same email.");
+router.put('/:email', (req,res)=>{
+    userController.update(req, res);
+});
 
-        var newUser = new User({
-                email: req.body.email, name: req.body.name, surname: req.body.surname, phone: req.body.phone, birth_date: req.body.birth_date, balance: 0
-            });
-             
-        newUser.save(function (err,trans) {
-            if (err) return next(err);
-            res.json(trans);
-            });
-    });
-    
+router.delete('/:email', (req,res)=>{
+    userController.deleteOne(req, res);
 });
 
 
-//update 
-router.put('/:email', (req,res,next)=>{
-
-    User.findByIdAndUpdate(req.params.email,req.body, (err,trans)=>{
-        if(err) return next(err);
-        res.json(trans);
-    });
-});
-
-//delete
-router.delete('/:email', (req,res,next)=>{
-
-    User.findByIdAndRemove(req.params.email,req.body, (err,trans)=>{
-        if(err) return next(err);
-        res.json(trans);
-    });
-});
-
-
-module.exports = router;
-
+export default router;

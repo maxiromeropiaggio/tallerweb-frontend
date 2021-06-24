@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import pkg from 'mongoose';
+const { Schema, model } = pkg;
 
-
-var transactionSchema = new mongoose.Schema({
+var transactionSchema = new Schema({
     email: String,
     monto: Number,
     status: String,
@@ -10,4 +10,4 @@ var transactionSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Transaction', transactionSchema);
+export default model('Transaction', transactionSchema);
