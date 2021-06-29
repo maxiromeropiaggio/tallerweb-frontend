@@ -6,28 +6,24 @@ var userController = {};
 //get all users
 userController.list = function (req, res) {
 
-    User.find({}).exec(function (err, user) {
-        if (err) {
-            return res.status(500).json({
-                mensaje: "Error en el servidor"
-            })
-        }
+    User.find({}).exec(function (err, users) {
+        if (err) res.status(500).json({ mensaje: "Error en el servidor", err });
 
-        return res.json(user);
+        return res.json(users);
     });
 
 };
 
 //get an user by email
 userController.listOne = function (req, res) {
-    if(!req.body || !req.body.email ){
+    if (!req.body || !req.body.email) {
         return res.status(400).json({ mensaje: "Debe ingresar datos" });
     }
 
     const data = req.body.email;
 
-    User.find({email:data}).exec(function (err, user) {
-        if (err) return res.status(500).json({ msj: 'Error en el servidor' });
+    User.find({ email: data }).exec(function (err, user) {
+        if (err) res.status(500).json({ mensaje: "Error en el servidor", err });
 
         if (user.length == 0) {
             return res.json({
@@ -42,11 +38,11 @@ userController.listOne = function (req, res) {
 
 //save user
 userController.save = function (req, res) {
-    if(!req.body || !req.body.email ){
+    if (!req.body || !req.body.email) {
         return res.status(400).json({ mensaje: "Debe ingresar datos" });
     }
     const data = req.body.email;
-    User.find({email:data}).exec((err, user) => {
+    User.find({ email: data }).exec((err, user) => {
         if (err) return res.status(500).json({ mensaje: "Error en el servidor", err });
 
         if (user.length > 0) {
@@ -66,25 +62,25 @@ userController.save = function (req, res) {
 };
 
 //update a user
-userController.update =  async function (req, res) {
-    if(!req.body || !req.body.email ){
+userController.update = async function (req, res) {
+    if (!req.body || !req.body.email) {
         return res.status(400).json({ mensaje: "Debe ingresar datos" });
     }
 
-    await User.findOneAndUpdate({email:req.params.email}, req.body, async (err, user) => {
+    await User.findOneAndUpdate({ email: req.params.email }, req.body, async (err, user) => {
         if (err) return res.status(500).json({ mensaje: "Error en el servidor", err });
-        return res.status(200).json({mensaje: "Modificado"});
+        return res.status(200).json({ mensaje: "Modificado" }).send();
     });
 };
 
 //delete a user
 userController.deleteOne = function (req, res) {
-    if(!req.body || !req.body.email ){
+    if (!req.body || !req.body.email) {
         return res.status(400).json({ mensaje: "Debe ingresar datos" });
     }
-    User.findOneAndRemove({email: req.params.email}, req.body, (err, user) => {
+    User.findOneAndRemove({ email: req.params.email }, req.body, (err, user) => {
         if (err) return res.status(500).json({ mensaje: "Error en el servidor", err });
-        return res.status(200).json({mensaje: "Eliminado"});
+        return res.status(200).json({ mensaje: "Eliminado" });
     });
 };
 

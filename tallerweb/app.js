@@ -1,31 +1,39 @@
 import pkg_bodyparser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import createError from 'http-errors';
 import pkg_mongoose from 'mongoose';
-import path from 'path';
-import { dirname } from 'path';
+import logger from 'morgan';
+import dotnev from 'dotenv';
 import index from './routes/index.route.js';
 import transactions from './routes/transaction.route.js';
 import users from './routes/user.route.js';
 const { connect } = pkg_mongoose;
 const { json, urlencoded } = pkg_bodyparser;
+import { URL } from 'url';
 
+dotnev.config();
 
-connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true} ,function (err) {
+connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, function (err) {
   if (err) throw err;
   console.log('Successfully connected to mongoDB.');
 });
 
 var app = express();
-app.use(json());
-app.use(urlencoded({ extended: false }));
-app.use(express.static(path.join(dirname(import.meta.url), 'public')));
 
 // view engine setup
-app.set('views', path.join(dirname(import.meta.url), 'views'));
+app.set('views', decodeURIComponent(new URL('./views', import.meta.url).pathname));
 app.set('view engine', 'ejs');
 
-app.use('/', index)
+app.use(logger('dev'));
+app.use(json());
+app.use(urlencoded({ extended: false }));
+app.use(cookieParser());
+
+//setting public path
+app.use(express.static(decodeURIComponent(new URL('./public', import.meta.url).pathname)));
+
+app.use('/', index);
 app.use('/transactions', transactions);
 app.use('/users', users);
 

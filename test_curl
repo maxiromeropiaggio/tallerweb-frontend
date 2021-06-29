@@ -1,0 +1,11 @@
+curl -i -X POST -H "Content-Type: application/json" -d '{ "email":"aguantemaxi_98@hotmail.com","monto": 1,"status": "PAYED", "ipn_response" : {"source":"","raw":""}}' localhost:3000/transactions/
+
+curl -i -X GET localhost:3000/
+
+curl -i -X GET localhost:3000/users/
+
+curl -i -X GET localhost:3000/transactions/
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{ "monto": 999 } localhost:3000/user/:aguantemaxi_98@hotmail.com
+
+curl -i -X POST -H "Content-Type: application/json" -d '{ "email":"maxiromeropiaggio@gmail.com","monto": 333,"status": "UNPAYED", "ipn_response" : {"source":"","raw":""}}' localhost:3000/transactions/

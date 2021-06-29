@@ -1,22 +1,25 @@
 {
   "name": "tallerweb",
   "version": "1.0.0",
-  "description": "",
+  "description": "Entrega Final Taller de Desarrollo Web.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./bin/www.js"
+    "start": "node ./bin/www"
   },
   "author": "ramax",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
     "ejs": "~2.5.7",
     "express": "^4.17.1",
     "http-errors": "~1.6.2",
-    "mongodb": "^3.6.6",
-    "mongoose": "^5.12.7"
-  },
-  "type": "module"
+    "mongodb": "^3.6.9",
+    "mongoose": "^5.12.7",
+    "morgan": "~1.9.0"
+  }
 }

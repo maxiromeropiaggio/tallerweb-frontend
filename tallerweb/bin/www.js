@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * Module dependencies.
  */
@@ -12,7 +14,7 @@ import { createServer } from 'http';
  * Normalize a port into a number, string, or false.
  */
 
- function normalizePort(val) {
+function normalizePort(val) {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -42,13 +44,21 @@ app.set('port', port);
 var server = createServer(app);
 
 /**
+ * Setting Host address.
+ */
+
+let hostname = process.env.HOST || 'localhost';
+app.set('hostname', hostname);
+
+/**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, hostname, () => {
+  console.log('Opened server on', server.address());
+});
 server.on('error', onError);
 server.on('listening', onListening);
-console.log('Server listening at port ' + port + '.');
 
 /**
  * Event listener for HTTP server "error" event.
