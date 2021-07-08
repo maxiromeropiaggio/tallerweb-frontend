@@ -30,8 +30,11 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//setting public path
+// setting public path
 app.use(express.static(decodeURIComponent(new URL('./public', import.meta.url).pathname)));
+
+// setting front-end path
+/* app.use(express.static(decodeURIComponent(new URL('./' + process.env.FRONT_PATH, import.meta.url).pathname))); */
 
 app.use('/', index);
 app.use('/transactions', transactions);

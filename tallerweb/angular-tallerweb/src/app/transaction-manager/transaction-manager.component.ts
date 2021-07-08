@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./transaction-manager.component.css']
 })
 export class TransactionManagerComponent implements OnInit {
+  static title: any;
 
   constructor() { }
 
