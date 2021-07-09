@@ -1,5 +1,5 @@
 html {
-    /* background: url(../img/background.jpg) center;
+    /* background: url(../assets/img/background.jpg) center;
     background-color: white; */
     margin-top: 8px;
 }
@@ -25,7 +25,25 @@ body hr {
     color:gray;
 }
 
+#presentationBox {
+    border-color: red;
+    border-style: dashed;
+}
 
 #presentationTab {
-    text-decoration-color: green;
+    padding-top: 80px;
+    position: static;
+    z-index: 1;
+    border-color: green;
+    border-style:groove;
+}
+
+#imgMain {
+    position: absolute right;
+    float: inline-end;
+    margin-inline-end: 20px;
+    z-index: 0;
+    image-rendering: optimizeQuality;
+    border-color:blueviolet;
+    border-style: dotted;
 }
