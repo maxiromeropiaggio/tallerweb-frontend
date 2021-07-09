@@ -1,0 +1,29 @@
+.container-fluid {
+    border-style: dashed;
+    border-color: blue;
+}
+
+#optionButtons {
+    border-style: dashed;
+    border-color: green;
+}
+
+#optionButtons button {
+    background-color: rgb(230, 230, 230);
+}
+
+#tableTransactions {
+    margin-bottom: 10%;
+    margin-left: 12%;
+    max-width: 80%;
+    border-style: dashed;
+    border-color: red;
+}
+
+/* #tableTransactions th {
+    text-indent: 30px;
+} */
+
+#tableTransactions td {
+    text-align: justify;
+}

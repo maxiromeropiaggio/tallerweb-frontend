@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { TransactionManagerComponent } from './transaction-manager/transaction-manager.component';
+import { TransactionManagerComponent } from './components/transaction-manager/transaction-manager.component';
 
 @NgModule({
   declarations: [

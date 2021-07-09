@@ -1,7 +1,7 @@
 html {
     /* background: url(../assets/img/background.jpg) center;
     background-color: white; */
-    margin-top: 8px;
+    margin-top: 4px;
 }
 
 ul {
@@ -25,25 +25,18 @@ body hr {
     color:gray;
 }
 
-#presentationBox {
-    border-color: red;
-    border-style: dashed;
-}
-
 #presentationTab {
-    padding-top: 80px;
-    position: static;
-    z-index: 1;
-    border-color: green;
-    border-style:groove;
+    border-top-color: white ;
+    border-left-color: white ;
+    border-right-color: white ;
+    border-style: solid;
 }
 
 #imgMain {
     position: absolute right;
+    display: block;
+    margin-left: 100%;
     float: inline-end;
     margin-inline-end: 20px;
-    z-index: 0;
     image-rendering: optimizeQuality;
-    border-color:blueviolet;
-    border-style: dotted;
 }
