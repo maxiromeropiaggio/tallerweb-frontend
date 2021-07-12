@@ -6,18 +6,38 @@
     background-color: rgb(220, 220, 220);
 }
 
+#btn-email {
+    color: black;
+}
+
+.sortOrder:after {
+    content: '  \25b2';
+    /* UP-POINTING TRIANGLE */
+    color: rgb(60, 60, 60);
+}
+
+.sortOrder.reverse:after {
+    content: '  \25bc';
+    /* DOWN-POINTING TRIANGLE */
+    color: rgb(60, 60, 60);
+}
+
 .col-1 {
     width: min-content;
 }
 
-thead tr th { 
+thead tr th {
     position: sticky;
     top: 0;
     z-index: 10;
     background-color: rgb(212, 212, 212);
 }
 
-.table-responsive { 
+tbody>tr {
+    text-align: justify;
+}
+
+.table-responsive {
     height: 360px;
     overflow-y: auto;
 }
