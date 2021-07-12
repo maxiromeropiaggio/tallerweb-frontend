@@ -1,29 +1,23 @@
-.container-fluid {
-    border-style: dashed;
-    border-color: blue;
-}
-
-#optionButtons {
-    border-style: dashed;
-    border-color: green;
-}
-
 #optionButtons button {
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(241, 241, 241);
 }
 
-#tableTransactions {
-    margin-bottom: 10%;
-    margin-left: 12%;
-    max-width: 80%;
-    border-style: dashed;
-    border-color: red;
+#optionButtons :hover {
+    background-color: rgb(220, 220, 220);
 }
 
-/* #tableTransactions th {
-    text-indent: 30px;
-} */
+.col-1 {
+    width: min-content;
+}
 
-#tableTransactions td {
-    text-align: justify;
+thead tr th { 
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: rgb(212, 212, 212);
+}
+
+.table-responsive { 
+    height: 360px;
+    overflow-y: auto;
 }

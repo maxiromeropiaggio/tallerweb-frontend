@@ -9,19 +9,20 @@
 
 <body>
   <!-- Presentación -->
-  <img class="img-fluid" id="imgMain" src="../assets/img/UNICEN.png" alt="">
+  <img class="img" id="imgMain" src="../assets/img/UNICEN.png" alt="">
 
   <ul class="nav nav-tabs" id="presentationTab" role="tablist">
 
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
+      <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
         aria-controls="home" aria-selected="true">
         <img src="../assets/icons/home.svg" width="24px" class="img-fluid" alt="Inicio" title="Inicio">
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="transaction-manager-tab" data-bs-toggle="tab" data-bs-target="#transaction-manager"
-        type="button" role="tab" aria-controls="transaction-manager" aria-selected="false">
+      <button class="nav-link active" id="transaction-manager-tab" data-bs-toggle="tab"
+        data-bs-target="#transaction-manager" type="button" role="tab" aria-controls="transaction-manager"
+        aria-selected="false">
         <img src="../assets/icons/credit-card.svg" width="24px" class="img-fluid" alt="Gestor de transacciones"
           title="Gestor de transacciones">
       </button>
@@ -35,16 +36,20 @@
     </li>
   </ul>
 
+  <!-- Definición de cada pestaña de la barra de navegación -->
   <div class="tab-content" id="presentationTabContent">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
       <h1 class="title">{{title}}</h1>
       <br />
       <p>La presente aplicación web forma parte de la {{title}} de la cursada 2021. El fin de esta web es
         ofrecer mínimas operaciones para administrar las transacciones que almacenamos en el servidor.</p>
-
+      <br />
+      <p>Además posee soporte para distintos tamaños de pantalla.</p>
+      <hr />
     </div>
 
-    <div class="tab-pane fade" id="transaction-manager" role="tabpanel" aria-labelledby="transaction-manager-tab">
+    <div class="tab-pane fade show active" id="transaction-manager" role="tabpanel"
+      aria-labelledby="transaction-manager-tab">
       <!-- Gestor de transacciones -->
       <app-transaction-manager></app-transaction-manager>
     </div>
@@ -57,9 +62,10 @@
       <ul class="text-decoration-underline">Docentes</ul>
       <li>Alejandro Zunino</li>
       <li>Alfredo Teyseyre</li>
+      <hr />
     </div>
   </div>
-  <hr />
+
 
 </body>
 

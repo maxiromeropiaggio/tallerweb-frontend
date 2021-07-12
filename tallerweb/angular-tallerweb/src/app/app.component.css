@@ -1,7 +1,16 @@
-html {
-    /* background: url(../assets/img/background.jpg) center;
-    background-color: white; */
-    margin-top: 4px;
+#imgMain {
+    display: block;
+    margin-left: 100%;
+    float: right;
+    margin-inline-end: 20px;
+    image-rendering: optimizeQuality;
+}
+
+#presentationTab {
+    border-top-color: white ;
+    border-left-color: white ;
+    border-right-color: white ;
+    border-style: solid;
 }
 
 ul {
@@ -13,6 +22,7 @@ p {
     font-size: 20px;
     margin-inline-start: 30px;
     margin-inline-end: 30px;
+    text-justify: auto;
 }
 
 li, li a {
@@ -23,20 +33,4 @@ li, li a {
 body hr {
     margin-top: 40px;
     color:gray;
-}
-
-#presentationTab {
-    border-top-color: white ;
-    border-left-color: white ;
-    border-right-color: white ;
-    border-style: solid;
-}
-
-#imgMain {
-    position: absolute right;
-    display: block;
-    margin-left: 100%;
-    float: inline-end;
-    margin-inline-end: 20px;
-    image-rendering: optimizeQuality;
 }
