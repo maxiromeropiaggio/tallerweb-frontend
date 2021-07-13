@@ -63,28 +63,28 @@
                 </th>
                 <th scope="col">
                   <div id="settingIcon">
-                  <img src="../../../assets/icons/tool.svg" alt="Ajustes" title="Ajustes"
-                    width="24px">
-                </div>
+                    <img src="../../../assets/icons/tool.svg" alt="Ajustes" title="Ajustes" width="24px">
+                  </div>
                 </th>
               </tr>
             </thead>
-            <tbody>
-
-              <tr *ngFor="let transaction of transactions | sort:propertyName:reverse">
+            <tbody id="transactionRows">
+              <!-- Angular's class binding can add and remove a CSS class conditionally. Add [class.some-css-class]="some-condition" to the element you want to style. -->
+              <tr *ngFor="let transaction of transactions | sort:propertyName:reverse" (click)="onSelect(transaction)"
+                [class.selected]="transaction === selectedTransaction">
                 <th scope="row" style="text-indent: 20%;">{{ transaction.id }}</th>
                 <td>{{ transaction.email }}</td>
                 <td style="text-indent: 5%;">{{ transaction.mount | currency }}</td>
                 <td>{{ transaction.ipn_response.source | uppercase }}</td>
                 <td>{{ transaction.date | date:"fullDate" }}</td>
                 <td style="max-width: fit-content;">{{ transaction.status | uppercase }}</td>
-                <td style="text-align: center;"><button type="button" class="btn btn-outline-light mx-1"><img
+                <td style="text-align: center;">
+                  <button type="button" class="btn btn-outline-light mx-1"><img
                       src="../../../assets/icons/edit.svg" art="Editar" width="24px" title="Editar una transacción"
                       (click)="update()"> </button>
 
-                  <button type="button" class="btn btn-outline-light mx-1"><img
-                      src="../../../assets/icons/delete.svg" art="Borrar" width="24px" title="Borrar"
-                      (click)="delete()"> </button>
+                  <button type="button" class="btn btn-outline-light mx-1"><img src="../../../assets/icons/delete.svg"
+                      art="Borrar" width="24px" title="Borrar" (click)="delete()"> </button>
                 </td>
               </tr>
 
@@ -94,10 +94,17 @@
         </div>
         <!-- PRUEBAS -->
 
-        <!-- <div>
-          <label class="label-primary" for="mp">Medio de pago de la T: </label>
-          <input id="mp" [(ngModel)]="transactions[0].ipn_response.source" placeholder="mp">
-        </div> -->
+        <div *ngIf="selectedTransaction">
+
+          <h2>{{selectedTransaction.email | uppercase}} Detalles</h2>
+          <div><span>id: </span>{{selectedTransaction.id}}</div>
+          <div>
+            <label for="t-mount">transaction mount: </label>
+            <input id="t-mount" [(ngModel)]="selectedTransaction.mount" placeholder="">
+          </div>
+
+        </div>
+
 
       </div>
     </div>

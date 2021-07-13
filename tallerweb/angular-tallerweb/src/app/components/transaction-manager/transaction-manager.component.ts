@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Transaction, transactions } from '../../interfaces/transaction';
+import { Transaction } from 'src/app/interfaces/transaction';
+import { TransactionService } from 'src/app/services/transaction.service';
 
 @Component({
   selector: 'app-transaction-manager',
@@ -11,16 +11,17 @@ export class TransactionManagerComponent implements OnInit {
 
   public propertyName: string;
   public reverse: boolean;
+  public selectedTransaction?: Transaction;
 
-  public transactions: Transaction[] = transactions;
+  public transactions: Transaction[] = [];
 
-  constructor() {
+  constructor(private transactionService: TransactionService) {
     this.reverse = false;
     this.propertyName = "id";
   }
 
   ngOnInit(): void {
-
+    this.getTransactions();
   }
 
   title = 'Gestor de transacciones';
@@ -30,6 +31,14 @@ export class TransactionManagerComponent implements OnInit {
     this.reverse = (this.propertyName === propertyName) ? !this.reverse : false;
     this.propertyName = propertyName;
   };
+
+  onSelect(transaction: Transaction): void {
+    this.selectedTransaction = transaction;
+  }
+
+  getTransactions(): void {
+    this.transactionService.getTransactions().subscribe(transactions => this.transactions = transactions);
+  }
 
   refresh() {
     /*

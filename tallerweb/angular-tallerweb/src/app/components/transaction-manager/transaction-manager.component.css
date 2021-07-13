@@ -43,3 +43,18 @@ thead tr th {
     padding-block: 7px;
     padding-inline: 13px;
 }
+
+#transactionRows tr.selected {
+    background-color: rgb(160, 160, 255);
+    color: white;
+}
+
+#transactionRows tr.selected:hover {
+    background-color: rgb(130, 130, 255);
+    color: white;
+}
+
+#transactionRows tr.selected:active {
+    background-color: blue;
+    color: white;
+}
