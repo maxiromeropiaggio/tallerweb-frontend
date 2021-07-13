@@ -26,7 +26,7 @@ export class TransactionManagerComponent implements OnInit {
   }
 
   title = 'Gestor de transacciones';
-  //transactions = transactions;
+  //transactions = transactions; xd
   // ¿Cómo hago para pedir las transacciones al servidor?
 
   sortBy = (propertyName: string) => {
