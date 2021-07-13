@@ -2,6 +2,7 @@ import pkg from 'mongoose';
 const { Schema, model } = pkg;
 
 var transactionSchema = new Schema({
+    id: Number, /* Autoincremental */
     email: String,
     monto: Number,
     status: String,

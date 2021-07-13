@@ -11,14 +11,14 @@ export class TransactionManagerComponent implements OnInit {
 
   public propertyName: string;
   public reverse: boolean;
-  public order:string;
+  public order: string;
 
   public transactions: Transaction[] = transactions;
 
   constructor() {
     this.reverse = false;
     this.propertyName = "id";
-    this.order= 'asc';
+    this.order = 'asc';
   }
 
   ngOnInit(): void {
@@ -26,15 +26,14 @@ export class TransactionManagerComponent implements OnInit {
   }
 
   title = 'Gestor de transacciones';
-  //transactions = transactions; xd
   // ¿Cómo hago para pedir las transacciones al servidor?
 
   sortBy = (propertyName: string) => {
     this.reverse = (this.propertyName === propertyName) ? !this.reverse : false;
     this.propertyName = propertyName;
-    if(this.order === 'asc'){
+    if (this.order === 'asc') {
       this.order = 'desc';
-    }else{
+    } else {
       this.order = 'asc';
     }
   };
@@ -75,7 +74,7 @@ export class TransactionManagerComponent implements OnInit {
 
   }
 
- 
+
 
 
 }
