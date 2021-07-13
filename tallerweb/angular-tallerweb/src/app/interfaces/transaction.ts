@@ -6,6 +6,8 @@ export interface Transaction {
   date: Date;
 }
 
+/* Ejemplo */
+
 export const transactions = [
     {
         email: "lionelmessi@gmail.com",

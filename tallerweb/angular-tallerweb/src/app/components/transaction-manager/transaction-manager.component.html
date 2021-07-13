@@ -75,15 +75,22 @@
                   <th scope="row" style="text-indent: 15%;">{{ i + 1 }}</th>
                   <td>{{ transaction.email }}</td>
                   <td style="text-indent: 5%;">{{ transaction.monto }}</td>
-                  <td>{{ transaction.ipn_response.source }}</td>
+                  <td>{{ transaction.ipn_response.source | uppercase }}</td>
                   <td>{{ transaction.date }}</td>
-                  <td>{{ transaction.status }}</td>
+                  <td>{{ transaction.status | uppercase }}</td>
                 </tr>
               </ng-template>
 
             </tbody>
           </table>
         </div>
+        <!-- PRUEBAS -->
+        
+        <!-- <div>
+          <label class="label-primary" for="mp">Medio de pago de la T: </label>
+          <input id="mp" [(ngModel)]="transactions[0].ipn_response.source" placeholder="mp">
+        </div> -->
+
       </div>
     </div>
   </div>

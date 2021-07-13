@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { AppComponent } from './app.component';
 import { TransactionManagerComponent } from './components/transaction-manager/transaction-manager.component';
@@ -10,7 +11,8 @@ import { TransactionManagerComponent } from './components/transaction-manager/tr
     TransactionManagerComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { transactions } from './datos';
+import { transactions } from '../../interfaces/transaction';
 
 @Component({
   selector: 'app-transaction-manager',
@@ -8,9 +8,9 @@ import { transactions } from './datos';
   styleUrls: ['./transaction-manager.component.css']
 })
 export class TransactionManagerComponent implements OnInit {
-  static title: any;
-  propertyName: string;
-  reverse: boolean;
+
+  private propertyName: string;
+  private reverse: boolean;
 
   constructor() {
     this.reverse = false;
@@ -24,7 +24,7 @@ export class TransactionManagerComponent implements OnInit {
   transactions = transactions;
   // ¿Cómo hago para pedir las transacciones al servidor?
 
-  sortBy =  (propertyName: string) => {
+  sortBy = (propertyName: string) => {
     this.reverse = (this.propertyName === propertyName) ? !this.reverse : false;
     this.propertyName = propertyName;
   };
