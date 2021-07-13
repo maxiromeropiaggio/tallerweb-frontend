@@ -33,11 +33,13 @@ thead tr th {
     background-color: rgb(212, 212, 212);
 }
 
-tbody>tr {
-    text-align: justify;
-}
-
 .table-responsive {
     height: 360px;
     overflow-y: auto;
+}
+
+#settingIcon {
+    text-indent: 40%;
+    padding-block: 7px;
+    padding-inline: 13px;
 }

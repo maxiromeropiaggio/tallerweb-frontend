@@ -16,19 +16,13 @@
       <button type="button" class="btn btn-lg btn-outline-light mb-2 mx-3"><img
           src="../../../assets/icons/file-plus.svg" art="Crear" width="24px" title="Crear una transacción"
           (click)="create()"> </button>
-
-      <button type="button" class="btn btn-lg btn-outline-light mb-2 mx-3"><img src="../../../assets/icons/edit.svg"
-          art="Editar" width="24px" title="Editar una transacción" (click)="update()"> </button>
-
-      <button type="button" class="btn btn-lg btn-outline-light mb-2 mx-3"><img src="../../../assets/icons/delete.svg"
-          art="Borrar" width="24px" title="Borrar" (click)="delete()"> </button>
     </div>
 
     <!-- Tabla de transacciones -->
     <div class="col">
       <div class="container-fluid">
         <div class="table-responsive">
-          <table id="sortTable" class="table table-striped table-hover align-middle" name="tableTransactions">
+          <table class="table table-striped table-hover align-middle" name="tableTransactions">
             <thead>
               <tr>
                 <th scope="col">
@@ -44,8 +38,7 @@
 
                 <th scope="col">
                   <button type="button" class="btn btn-outline-light" (click)="sortBy('mount')"><img
-                      src="../../../assets/icons/dollar-sign.svg" alt="Monto" title="Monto" 
-                      width="24px"></button>
+                      src="../../../assets/icons/dollar-sign.svg" alt="Monto" title="Monto" width="24px"></button>
                   <span class="sortOrder" *ngIf="propertyName === 'mount'" [ngClass]="{reverse: reverse}"></span>
                 </th>
 
@@ -58,8 +51,7 @@
 
                 <th scope="col">
                   <button type="button" class="btn btn-outline-light" (click)="sortBy('date')"><img
-                      src="../../../assets/icons/calendar.svg" alt="Fecha" title="Fecha"
-                      width="24px"></button>
+                      src="../../../assets/icons/calendar.svg" alt="Fecha" title="Fecha" width="24px"></button>
                   <span class="sortOrder" *ngIf="propertyName === 'date'" [ngClass]="{reverse: reverse}"></span>
                 </th>
 
@@ -69,17 +61,31 @@
                       width="24px"></button>
                   <span class="sortOrder" *ngIf="propertyName === 'status'" [ngClass]="{reverse: reverse}"></span>
                 </th>
+                <th scope="col">
+                  <div id="settingIcon">
+                  <img src="../../../assets/icons/tool.svg" alt="Ajustes" title="Ajustes"
+                    width="24px">
+                </div>
+                </th>
               </tr>
             </thead>
             <tbody>
 
-              <tr *ngFor="let transaction of transactions | sort:propertyName:order">
-                <th scope="row" style="text-indent: 15%;">{{ transaction.id }}</th>
+              <tr *ngFor="let transaction of transactions | sort:propertyName:reverse">
+                <th scope="row" style="text-indent: 20%;">{{ transaction.id }}</th>
                 <td>{{ transaction.email }}</td>
                 <td style="text-indent: 5%;">{{ transaction.mount | currency }}</td>
                 <td>{{ transaction.ipn_response.source | uppercase }}</td>
-                <td>{{ transaction.date | date:"shortDate" }}</td>
-                <td>{{ transaction.status | uppercase }}</td>
+                <td>{{ transaction.date | date:"fullDate" }}</td>
+                <td style="max-width: fit-content;">{{ transaction.status | uppercase }}</td>
+                <td style="text-align: center;"><button type="button" class="btn btn-outline-light mx-1"><img
+                      src="../../../assets/icons/edit.svg" art="Editar" width="24px" title="Editar una transacción"
+                      (click)="update()"> </button>
+
+                  <button type="button" class="btn btn-outline-light mx-1"><img
+                      src="../../../assets/icons/delete.svg" art="Borrar" width="24px" title="Borrar"
+                      (click)="delete()"> </button>
+                </td>
               </tr>
 
             </tbody>

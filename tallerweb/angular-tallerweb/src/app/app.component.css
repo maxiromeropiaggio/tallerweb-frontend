@@ -2,7 +2,7 @@
     display: block;
     margin-left: 100%;
     float: right;
-    margin-inline-end: 20px;
+    margin-inline-end: 5%;
     image-rendering: optimizeQuality;
 }
 
@@ -18,15 +18,14 @@ ul {
 }
 
 p {
-    text-indent: 40px;
     font-size: 20px;
-    margin-inline-start: 30px;
-    margin-inline-end: 30px;
+    margin-inline-start: 5%;
+    margin-inline-end: 5%;
     text-justify: auto;
 }
 
 li, li a {
-    text-indent: 100px;
+    text-indent: 6%;
     font-size: 16px;
 }
 

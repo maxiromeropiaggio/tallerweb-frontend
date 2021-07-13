@@ -11,14 +11,12 @@ export class TransactionManagerComponent implements OnInit {
 
   public propertyName: string;
   public reverse: boolean;
-  public order: string;
 
   public transactions: Transaction[] = transactions;
 
   constructor() {
     this.reverse = false;
     this.propertyName = "id";
-    this.order = 'asc';
   }
 
   ngOnInit(): void {
@@ -31,11 +29,6 @@ export class TransactionManagerComponent implements OnInit {
   sortBy = (propertyName: string) => {
     this.reverse = (this.propertyName === propertyName) ? !this.reverse : false;
     this.propertyName = propertyName;
-    if (this.order === 'asc') {
-      this.order = 'desc';
-    } else {
-      this.order = 'asc';
-    }
   };
 
   refresh() {
