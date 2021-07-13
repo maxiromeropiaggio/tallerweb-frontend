@@ -4,17 +4,19 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { AppComponent } from './app.component';
 import { TransactionManagerComponent } from './components/transaction-manager/transaction-manager.component';
+import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TransactionManagerComponent
+    TransactionManagerComponent,
+    SortPipe
   ],
   imports: [
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

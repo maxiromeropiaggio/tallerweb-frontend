@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { transactions } from '../../interfaces/transaction';
+import { Transaction, transactions } from '../../interfaces/transaction';
 
 @Component({
   selector: 'app-transaction-manager',
@@ -9,24 +9,34 @@ import { transactions } from '../../interfaces/transaction';
 })
 export class TransactionManagerComponent implements OnInit {
 
-  private propertyName: string;
-  private reverse: boolean;
+  public propertyName: string;
+  public reverse: boolean;
+  public order:string;
+
+  public transactions: Transaction[] = transactions;
 
   constructor() {
     this.reverse = false;
-    this.propertyName = "";
+    this.propertyName = "id";
+    this.order= 'asc';
   }
 
   ngOnInit(): void {
+
   }
 
   title = 'Gestor de transacciones';
-  transactions = transactions;
+  //transactions = transactions;
   // ¿Cómo hago para pedir las transacciones al servidor?
 
   sortBy = (propertyName: string) => {
     this.reverse = (this.propertyName === propertyName) ? !this.reverse : false;
     this.propertyName = propertyName;
+    if(this.order === 'asc'){
+      this.order = 'desc';
+    }else{
+      this.order = 'asc';
+    }
   };
 
   refresh() {
@@ -65,5 +75,7 @@ export class TransactionManagerComponent implements OnInit {
 
   }
 
-  
+ 
+
+
 }

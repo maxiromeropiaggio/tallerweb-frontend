@@ -1,33 +1,37 @@
 export interface Transaction {
+    id:number;
   email: string;
-  monto: number;
+  mount: number;
   status: string;
-  ipn_response: { source: String, raw: String };
-  date: Date;
+  ipn_response: { source: string};
+  date: number;
 }
 
 /* Ejemplo */
 
-export const transactions = [
+export const transactions:Transaction[] = [
     {
+        id: 1,
         email: "lionelmessi@gmail.com",
-        monto: 500,
+        mount: 500,
         status: "PAYED",
         ipn_response: { source: "MERCADOPAGO" },
-        date: Date.now()
+        date: Math.ceil(Math.random()*4) 
     },
     {
+        id: 2,
         email: "angeldimaria@gmail.com",
-        monto: 100,
+        mount: 100,
         status: "PAYED",
         ipn_response: { source: "PAYPAL" },
-        date: Date.now()
+        date: Math.ceil(Math.random()*4) 
     },
     {
+        id: 3,
         email: "dibumartinez@gmail.com",
-        monto: 250,
+        mount: 250,
         status: "PAYED",
         ipn_response: { source: "PAYPAL" },
-        date: Date.now()
+        date: Math.ceil(Math.random()*4) 
     }
 ]
