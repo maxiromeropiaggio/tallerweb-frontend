@@ -11,6 +11,8 @@ import users from './routes/user.route.js';
 const { connect } = pkg_mongoose;
 const { json, urlencoded } = pkg_bodyparser;
 import { URL } from 'url';
+import cors from "cors";
+
 
 dotnev.config();
 
@@ -29,7 +31,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-
+app.use(cors())
 // setting public path
 app.use(express.static(decodeURIComponent(new URL('./public', import.meta.url).pathname)));
 

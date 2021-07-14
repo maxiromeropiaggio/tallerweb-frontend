@@ -22,6 +22,7 @@ export class TransactionManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTransactions();
+
   }
 
   title = 'Gestor de transacciones';
@@ -36,8 +37,15 @@ export class TransactionManagerComponent implements OnInit {
     this.selectedTransaction = transaction;
   }
 
-  getTransactions(): void {
-    this.transactionService.getTransactions().subscribe(transactions => this.transactions = transactions);
+  async getTransactions() {
+    await this.transactionService.getTransactions().subscribe(transactions => {
+      this.transactions = transactions || [];
+      
+    }, error =>{
+      this.transactions = []
+    });
+
+    
   }
 
   refresh() {

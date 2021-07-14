@@ -3,9 +3,26 @@
     border-left-color: white;
     border-right-color: white;
     border-style: solid;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    border-style: hidden;
 }
 
+#imgMain {
+    margin-right: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+#headerBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: 1px solid #dee2e6;
+}
 /* body hr {
-    margin-top: 40px;
+    margin-top: 40px;W
     color: gray;
 } */

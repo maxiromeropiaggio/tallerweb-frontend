@@ -1,28 +1,36 @@
-  <!-- Barra de navegación principal -->
-<ul class="nav nav-tabs" id="presentationTab" role="tablist">
+<!-- Barra de navegación principal -->
 
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
-      aria-controls="home" aria-selected="true">
-      <img src="../assets/icons/home.svg" width="24px" class="img-fluid" alt="Inicio" title="Inicio">
-    </button>
-  </li>
-  <li class="nav-item" role="table">
-    <button class="nav-link" id="transaction-manager-tab" data-bs-toggle="tab"
-      data-bs-target="#transaction-manager" type="button" role="tab" aria-controls="transaction-manager"
-      aria-selected="false">
-      <img src="../assets/icons/credit-card.svg" width="24px" class="img-fluid" alt="Gestor de transacciones"
-        title="Gestor de transacciones">
-    </button>
+<div id="headerBar"> 
+  <ul class="nav nav-tabs" id="presentationTab" role="tablist">
 
-  </li>
-  <li class="nav-item" role="contentinfo">
-    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
-      aria-controls="contact" aria-selected="false">
-      <img src="../assets/icons/mail.svg" width="24px" class="img-fluid" alt="Contacto" title="Contacto">
-    </button>
-  </li>
-</ul>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
+        aria-controls="home" aria-selected="true">
+        <img src="../assets/icons/home.svg" width="24px" class="img-fluid" alt="Inicio" title="Inicio">
+      </button>
+    </li>
+    <li class="nav-item" role="table">
+      <button class="nav-link" id="transaction-manager-tab" data-bs-toggle="tab" data-bs-target="#transaction-manager"
+        type="button" role="tab" aria-controls="transaction-manager" aria-selected="false">
+        <img src="../assets/icons/credit-card.svg" width="24px" class="img-fluid" alt="Gestor de transacciones"
+          title="Gestor de transacciones">
+      </button>
+
+    </li>
+    <li class="nav-item" role="contentinfo">
+      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
+        aria-controls="contact" aria-selected="false">
+        <img src="../assets/icons/mail.svg" width="24px" class="img-fluid" alt="Contacto" title="Contacto">
+      </button>
+    </li>
+
+  </ul>
+  <!-- Logo UNICEN -->
+  <img class="img" id="imgMain" src="../assets/img/UNICEN.png" width="200px" alt="">
+</div>
+
+
+
 
 <!-- Definición de cada pestaña de la barra de navegación -->
 <div class="tab-content" id="presentationTabContent">
@@ -30,8 +38,7 @@
     <!-- Presentación -->
     <app-presentation></app-presentation>
   </div>
-  <div class="tab-pane fade" id="transaction-manager" role="tabpanel"
-    aria-labelledby="transaction-manager-tab">
+  <div class="tab-pane fade" id="transaction-manager" role="tabpanel" aria-labelledby="transaction-manager-tab">
     <!-- Gestor de transacciones -->
     <app-transaction-manager></app-transaction-manager>
   </div>

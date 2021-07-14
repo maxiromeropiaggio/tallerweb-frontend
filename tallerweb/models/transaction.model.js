@@ -2,13 +2,14 @@ import pkg from 'mongoose';
 const { Schema, model } = pkg;
 
 var transactionSchema = new Schema({
-    id: Number, /* Autoincremental */
     email: String,
-    monto: Number,
+    mount: Number,
     status: String,
-    ipn_response: { source: String, raw: String },
+    source: String,
     date: { type: Date , default: Date.now },
 
 });
+
+
 
 export default model('Transaction', transactionSchema);

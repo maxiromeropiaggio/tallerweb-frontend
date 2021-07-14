@@ -16,7 +16,7 @@ transController.list = function (req, res) {
 transController.save = function (req, res) {
     var newTransaction = new Transaction({
         email: req.body.email,
-        monto: req.body.monto, status: req.body.status, ipn_response: { source: req.body.source, raw: req.body.raw }, date: Date.now()
+        mount: req.body.mount, status: req.body.status, source: req.body.source, date: Date.now()
     });
     newTransaction.save(function (err, trans) {
         if (err) return res.status(500).json({ mensaje: "Error en el servidor", err });

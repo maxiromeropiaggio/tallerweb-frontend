@@ -11,4 +11,5 @@ var userSchema = new Schema({
     balance: Number
 });
 
+
 export default model('User', userSchema);

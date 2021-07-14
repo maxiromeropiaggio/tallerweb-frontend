@@ -1,8 +1,8 @@
 export interface Transaction {
-    id: number;
-    email: string;
-    mount: number;
-    status: string;
-    ipn_response: { source: string };
-    date: Date;
+    _id?: number;
+    email?: string;
+    mount?: number;
+    status?: string;
+    source?:string;
+    date?: Date;
 }
