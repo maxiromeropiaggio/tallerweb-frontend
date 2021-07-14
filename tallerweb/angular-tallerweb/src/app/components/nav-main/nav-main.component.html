@@ -1,17 +1,16 @@
 <!-- Barra de navegación principal -->
-
 <div id="headerBar"> 
   <ul class="nav nav-tabs" id="presentationTab" role="tablist">
 
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
-        aria-controls="home" aria-selected="true">
+        aria-controls="home" aria-selected="true" routerLink="/presentation">
         <img src="../assets/icons/home.svg" width="24px" class="img-fluid" alt="Inicio" title="Inicio">
       </button>
     </li>
     <li class="nav-item" role="table">
       <button class="nav-link" id="transaction-manager-tab" data-bs-toggle="tab" data-bs-target="#transaction-manager"
-        type="button" role="tab" aria-controls="transaction-manager" aria-selected="false">
+        type="button" role="tab" aria-controls="transaction-manager" aria-selected="false" routerLink="/transactions">
         <img src="../assets/icons/credit-card.svg" width="24px" class="img-fluid" alt="Gestor de transacciones"
           title="Gestor de transacciones">
       </button>
@@ -19,7 +18,7 @@
     </li>
     <li class="nav-item" role="contentinfo">
       <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
-        aria-controls="contact" aria-selected="false">
+        aria-controls="contact" aria-selected="false" routerLink="/contact">
         <img src="../assets/icons/mail.svg" width="24px" class="img-fluid" alt="Contacto" title="Contacto">
       </button>
     </li>
@@ -36,14 +35,14 @@
 <div class="tab-content" id="presentationTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     <!-- Presentación -->
-    <app-presentation></app-presentation>
+    <!-- <app-presentation></app-presentation> -->
   </div>
   <div class="tab-pane fade" id="transaction-manager" role="tabpanel" aria-labelledby="transaction-manager-tab">
     <!-- Gestor de transacciones -->
-    <app-transaction-manager></app-transaction-manager>
+    <!-- <app-transaction-manager></app-transaction-manager> -->
   </div>
   <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
     <!-- Información de Contacto -->
-    <app-contact></app-contact>
+    <!-- <app-contact></app-contact> -->
   </div>
 </div>
