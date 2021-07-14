@@ -26,9 +26,9 @@
             <thead>
               <tr>
                 <th scope="col">
-                  <button type="button" class="btn btn-outline-light" (click)="sortBy('id')"><img
+                  <button type="button" class="btn btn-outline-light" (click)="sortBy('index')"><img
                       src="../../../assets/icons/hash.svg" alt="#" title="#" width="20px"></button>
-                  <span class="sortOrder" *ngIf="propertyName === 'id'" [ngClass]="{reverse: reverse}"></span>
+                  <span class="sortOrder" *ngIf="propertyName === 'index'" [ngClass]="{reverse: reverse}"></span>
                 </th>
                 <th scope="col">
                   <button type="button" class="btn btn-outline-light" (click)="sortBy('email')" id="btn-email"><img
@@ -70,9 +70,9 @@
             </thead>
             <tbody id="transactionRows">
               <!-- Angular's class binding can add and remove a CSS class conditionally. Add [class.some-css-class]="some-condition" to the element you want to style. -->
-              <tr *ngFor="let transaction of transactions | sort:propertyName:reverse;let i=index" (click)="onSelect(transaction)"
+              <tr *ngFor="let transaction of transactions | sort:propertyName:reverse" (click)="onSelect(transaction)"
                 [class.selected]="transaction === selectedTransaction">
-                <th scope="row" style="text-indent: 20%;">{{ i+1 }}</th>
+                <th scope="row" style="text-indent: 20%;">{{ transaction.index }}</th>
                 <td>{{ transaction.email }}</td>
                 <td style="text-indent: 5%;">{{ transaction.mount | currency }}</td>
                 <td>{{ transaction.source | uppercase }}</td>
@@ -95,7 +95,7 @@
         <!-- PRUEBAS -->
 
         <div *ngIf="selectedTransaction">
-
+          <br style="margin-block: 10px;" />
           <h2>{{selectedTransaction.email | uppercase}} Detalles</h2>
           <div><span>Internal Id: </span>{{selectedTransaction._id}}</div>
           <div>

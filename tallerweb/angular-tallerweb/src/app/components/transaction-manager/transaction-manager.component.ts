@@ -17,7 +17,7 @@ export class TransactionManagerComponent implements OnInit {
 
   constructor(private transactionService: TransactionService) {
     this.reverse = false;
-    this.propertyName = "id";
+    this.propertyName = "index";
   }
 
   ngOnInit(): void {
@@ -40,9 +40,9 @@ export class TransactionManagerComponent implements OnInit {
   async getTransactions() {
     await this.transactionService.getTransactions().subscribe(transactions => {
       this.transactions = transactions || [];
-      
-    }, error =>{
+    }, error => {
       this.transactions = []
+      console.log('WARN: ' + error);
     });
 
     
@@ -52,7 +52,7 @@ export class TransactionManagerComponent implements OnInit {
     /*
     Pedir al servidor nuevamente todas las transacciones.
     */
-    window.alert('refresh works! :D');
+   this.getTransactions();
   }
 
   search() {

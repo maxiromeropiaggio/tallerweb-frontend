@@ -14,7 +14,7 @@ export class TransactionService {
   constructor(private http: HttpClient) { }
 
   getTransactions(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(environment.apiURL+'/transactions');
+    return this.http.get<Transaction[]>(environment.apiURL + '/transactions');
   }
 
   // Peticiones HTTP
