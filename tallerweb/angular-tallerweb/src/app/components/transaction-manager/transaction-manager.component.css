@@ -1,10 +1,14 @@
-#optionButtons button {
-    background-color: rgb(241, 241, 241);
+/* option top Buttons */
+
+#searchButton, #searchInputBox {
+    float: inline-end;
 }
 
-#optionButtons :hover {
-    background-color: rgb(220, 220, 220);
+.optionButtons {
+    margin-right: 2%;
 }
+
+/* transactionTable */
 
 #btn-email {
     color: black;
@@ -55,6 +59,6 @@ thead tr th {
 }
 
 #transactionRows tr.selected:active {
-    background-color: blue;
+    background-color: rgb(74, 74, 255);
     color: white;
 }

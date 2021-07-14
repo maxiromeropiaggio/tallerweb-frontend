@@ -11,6 +11,7 @@ import { TransactionManagerComponent } from './components/transaction-manager/tr
 import { ContactComponent } from './components/contact/contact.component';
 
 import { SortPipe } from './pipes/sort.pipe';
+import { TransactionCreatorComponent } from './components/transaction-creator/transaction-creator.component';
 
 
 
@@ -21,7 +22,8 @@ import { SortPipe } from './pipes/sort.pipe';
     PresentationComponent,
     TransactionManagerComponent,
     ContactComponent,
-    SortPipe
+    SortPipe,
+    TransactionCreatorComponent
   ],
   imports: [
     BrowserModule,

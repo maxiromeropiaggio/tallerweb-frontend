@@ -55,6 +55,13 @@ export class TransactionManagerComponent implements OnInit {
    this.getTransactions();
   }
 
+  create() {
+    /*
+    Crear una transaccion que luega será validada y enviada al servidor.
+    */
+    
+  }
+
   search() {
     /*
     Buscar por los atributos mostrados en pantalla:
@@ -63,12 +70,6 @@ export class TransactionManagerComponent implements OnInit {
 
   }
 
-  create() {
-    /*
-    Crear una transaccion que luega será validada y enviada al servidor.
-    */
-
-  }
 
   update() {
     /*

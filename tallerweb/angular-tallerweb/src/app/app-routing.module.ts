@@ -7,10 +7,13 @@ import { PresentationComponent } from './components/presentation/presentation.co
 import { TransactionManagerComponent } from './components/transaction-manager/transaction-manager.component';
 import { ContactComponent } from './components/contact/contact.component'; */
 import { AppComponent } from './app.component';
+import { NavMainComponent } from './components/nav-main/nav-main.component';
+import { TransactionCreatorComponent } from './components/transaction-creator/transaction-creator.component';
 
 /* Array de rutas */
 const routes: Routes = [
-  { path: '', component: AppComponent }
+  { path: '', component: NavMainComponent },
+  { path: 'createTransaction', component: TransactionCreatorComponent }
 ]
 
 
