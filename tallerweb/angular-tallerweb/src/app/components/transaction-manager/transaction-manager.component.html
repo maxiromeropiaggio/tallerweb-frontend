@@ -9,7 +9,7 @@
         alt="Refrescar" title="Refrescar" width="24px" (click)="refresh()">
     </button>
     <button class="btn btn-outline-light optionButtons" type="button"><img src="../../../assets/icons/file-plus.svg"
-        art="Crear" width="24px" title="Crear una transacción" routerLink="createTransaction">
+        art="Crear" width="24px" title="Crear una transacción" (click)="create()" ><!-- routerLink="createTransaction" -->
     </button>
     <div class="input-group">
       <input type="text" class="form-control" placeholder="Buscar en base a un email, monto, id..."
@@ -107,6 +107,7 @@
       </div>
     </div>
   </div>
+
   <!-- PRUEBAS -->
 
   <h1></h1>
@@ -124,3 +125,4 @@
 
 
 </div>
+

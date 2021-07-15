@@ -14,10 +14,12 @@ export class TransactionManagerComponent implements OnInit {
   public selectedTransaction?: Transaction;
 
   public transactions: Transaction[] = [];
+  public transaction: Transaction;
 
   constructor(private transactionService: TransactionService) {
     this.reverse = false;
     this.propertyName = "index";
+    this.transaction ={};
   }
 
   ngOnInit(): void {
@@ -40,6 +42,7 @@ export class TransactionManagerComponent implements OnInit {
   async getTransactions() {
     await this.transactionService.getTransactions().subscribe(transactions => {
       this.transactions = transactions || [];
+      this.transaction = transactions[0]
     }, error => {
       this.transactions = [];
       console.error(`getTransactions() failed: ${error.message}`);
@@ -74,6 +77,8 @@ export class TransactionManagerComponent implements OnInit {
   }
 
   create() {
+
+    this.transactions.push(this.transaction)
     /*
     Crear una transaccion que luega será validada y enviada al servidor.
     */
