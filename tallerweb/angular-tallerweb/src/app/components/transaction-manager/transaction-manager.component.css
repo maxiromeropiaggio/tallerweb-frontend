@@ -38,7 +38,8 @@ thead tr th {
 }
 
 .table-responsive {
-    overflow: visible;
+    height: 70vh;
+    overflow-y: auto;
 }
 
 #settingIcon {
