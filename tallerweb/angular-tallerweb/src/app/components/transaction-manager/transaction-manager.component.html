@@ -13,11 +13,11 @@
       <!-- routerLink="createTransaction" -->
     </button>
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="Buscar en base a un email, monto, id..."
+      <input id="buscarCampo" #searchBox  type="text" class="form-control" placeholder="Buscar en base a un email, monto, id..."
         aria-label="searchBox" aria-describedby="button-addon2">
       <button class="btn btn-outline-secondary optionButtons" type="button" id="button-addon2"><img
           src="../../../assets/icons/search.svg" art="Buscar" width="24px" title="Buscar en el listado"
-          (click)="search()"> </button>
+          (click)="search(searchBox.value)"> </button>
     </div>
 
   </div>

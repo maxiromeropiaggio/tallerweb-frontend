@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Transaction } from 'src/app/interfaces/transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
 
@@ -8,6 +8,8 @@ import { TransactionService } from 'src/app/services/transaction.service';
   styleUrls: ['./transaction-manager.component.css']
 })
 export class TransactionManagerComponent implements OnInit {
+
+  @Input() searchBox: string='';
 
   public propertyName: string;
   public reverse: boolean;
@@ -20,6 +22,7 @@ export class TransactionManagerComponent implements OnInit {
     this.reverse = false;
     this.propertyName = "index";
     this.transaction ={};
+  
   }
 
   ngOnInit(): void {
@@ -87,7 +90,9 @@ export class TransactionManagerComponent implements OnInit {
 
   }
 
-  search() {
+  search(event:any) {
+    console.log(event );
+    
     /*
     Buscar por los atributos mostrados en pantalla:
     - email - medio de pago - pagado - monto
