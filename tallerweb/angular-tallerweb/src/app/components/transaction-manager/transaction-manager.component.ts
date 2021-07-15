@@ -37,6 +37,8 @@ export class TransactionManagerComponent implements OnInit {
 
   onSelect(transaction: Transaction): void {
     this.selectedTransaction = transaction;
+    console.log(this.selectedTransaction);
+    
   }
 
   async getTransactions() {

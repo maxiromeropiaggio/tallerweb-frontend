@@ -9,7 +9,8 @@
         alt="Refrescar" title="Refrescar" width="24px" (click)="refresh()">
     </button>
     <button class="btn btn-outline-light optionButtons" type="button"><img src="../../../assets/icons/file-plus.svg"
-        art="Crear" width="24px" title="Crear una transacción" (click)="create()" ><!-- routerLink="createTransaction" -->
+        art="Crear" width="24px" title="Crear una transacción" (click)="create()">
+      <!-- routerLink="createTransaction" -->
     </button>
     <div class="input-group">
       <input type="text" class="form-control" placeholder="Buscar en base a un email, monto, id..."
@@ -77,26 +78,28 @@
             <tbody id="transactionRows">
               <!-- Angular's class binding can add and remove a CSS class conditionally. Add [class.some-css-class]="some-condition" to the element you want to style. -->
               <ng-template ngFor let-transaction [ngForOf]="transactions | sort:propertyName:reverse">
-                <tr (click)="onSelect(transaction)" [class.selected]="transaction === selectedTransaction">
-                <th scope="row" style="text-indent: 20%;">{{ transaction.index }}</th>
-                <td>{{ transaction.email }}</td>
-                <td style="text-indent: 5%;">{{ transaction.mount | currency }}</td>
-                <td>{{ transaction.source | uppercase }}</td>
-                <td>{{ transaction.date | date:"fullDate" }}</td>
-                <td style="max-width: fit-content;">{{ transaction.status | uppercase }}</td>
-                <td style="text-align: center;">
-                  <button type="button" class="btn btn-outline-light mx-1"><img src="../../../assets/icons/edit.svg"
-                      art="Editar" width="24px" title="Editar" (click)="update()"> </button>
+                <tr>
+                  <th scope="row" style="text-indent: 20%;">{{ transaction.index }}</th>
+                  <td>{{ transaction.email }}</td>
+                  <td style="text-indent: 5%;">{{ transaction.mount | currency }}</td>
+                  <td>{{ transaction.source | uppercase }}</td>
+                  <td>{{ transaction.date | date:"fullDate" }}</td>
+                  <td style="max-width: fit-content;">{{ transaction.status | uppercase }}</td>
+                  <td style="text-align: center;">
+                    <button type="button" class="btn btn-outline-light mx-1"><img src="../../../assets/icons/edit.svg"
+                        art="Editar" width="24px" title="Editar" (click)="onSelect(transaction)"> </button>
+                    <button type="button" class="btn btn-outline-light mx-1"><img src="../../../assets/icons/delete.svg"
+                        art="Borrar" width="24px" title="Borrar" (click)="delete()"> </button>
+                  </td>
+                </tr>
+                <tr *ngIf="transaction === selectedTransaction">
+                  <th scope="row" colspan="7" >
+                    <app-transaction-updater></app-transaction-updater>
+                  </th>
+                </tr>
 
-                  <button type="button" class="btn btn-outline-light mx-1"><img src="../../../assets/icons/delete.svg"
-                      art="Borrar" width="24px" title="Borrar" (click)="delete()"> </button>
-                </td>
-                
-              </tr>
-              <tr>
-              <app-transaction-updater *ngIf="transaction === selectedTransaction"></app-transaction-updater>
-              </tr>
               </ng-template>
+
 
             </tbody>
           </table>
@@ -125,4 +128,3 @@
 
 
 </div>
-
