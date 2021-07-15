@@ -12,6 +12,7 @@ import { ContactComponent } from './components/contact/contact.component';
 
 import { SortPipe } from './pipes/sort.pipe';
 import { TransactionCreatorComponent } from './components/transaction-creator/transaction-creator.component';
+import { TransactionUpdaterComponent } from './components/transaction-updater/transaction-updater.component';
 
 
 
@@ -23,7 +24,8 @@ import { TransactionCreatorComponent } from './components/transaction-creator/tr
     TransactionManagerComponent,
     ContactComponent,
     SortPipe,
-    TransactionCreatorComponent
+    TransactionCreatorComponent,
+    TransactionUpdaterComponent
   ],
   imports: [
     BrowserModule,

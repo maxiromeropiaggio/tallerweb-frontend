@@ -76,8 +76,8 @@
             </thead>
             <tbody id="transactionRows">
               <!-- Angular's class binding can add and remove a CSS class conditionally. Add [class.some-css-class]="some-condition" to the element you want to style. -->
-              <tr *ngFor="let transaction of transactions | sort:propertyName:reverse" (click)="onSelect(transaction)"
-                [class.selected]="transaction === selectedTransaction">
+              <ng-template ngFor let-transaction [ngForOf]="transactions | sort:propertyName:reverse">
+                <tr (click)="onSelect(transaction)" [class.selected]="transaction === selectedTransaction">
                 <th scope="row" style="text-indent: 20%;">{{ transaction.index }}</th>
                 <td>{{ transaction.email }}</td>
                 <td style="text-indent: 5%;">{{ transaction.mount | currency }}</td>
@@ -86,12 +86,17 @@
                 <td style="max-width: fit-content;">{{ transaction.status | uppercase }}</td>
                 <td style="text-align: center;">
                   <button type="button" class="btn btn-outline-light mx-1"><img src="../../../assets/icons/edit.svg"
-                      art="Editar" width="24px" title="Editar una transacción" (click)="update()"> </button>
+                      art="Editar" width="24px" title="Editar" (click)="update()"> </button>
 
                   <button type="button" class="btn btn-outline-light mx-1"><img src="../../../assets/icons/delete.svg"
                       art="Borrar" width="24px" title="Borrar" (click)="delete()"> </button>
                 </td>
+                
               </tr>
+              <tr>
+              <app-transaction-updater *ngIf="transaction === selectedTransaction"></app-transaction-updater>
+              </tr>
+              </ng-template>
 
             </tbody>
           </table>

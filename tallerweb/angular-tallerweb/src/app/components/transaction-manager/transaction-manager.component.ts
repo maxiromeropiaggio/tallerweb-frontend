@@ -41,25 +41,43 @@ export class TransactionManagerComponent implements OnInit {
     await this.transactionService.getTransactions().subscribe(transactions => {
       this.transactions = transactions || [];
     }, error => {
-      this.transactions = []
-      console.log('WARN: ' + error);
+      this.transactions = [];
+      console.error(`getTransactions() failed: ${error.message}`);
     });
 
-    
+  }
+
+  async updateTransaction() {
+    await this.transactionService.updateTransaction(this.selectedTransaction as Transaction).subscribe(next => {
+      console.log('The transaction was update successfully.');
+      this.selectedTransaction = undefined;
+    }, error => {
+      console.error(`updateTransaction() failed: ${error.message}`);
+    });
+  }
+
+  async deleteTransaction() {
+    await this.transactionService.deleteTransaction(this.selectedTransaction as Transaction).subscribe(next => {
+      console.log('The transaction was delete successfully.');
+      this.transactions = this.transactions.filter((t) => { return t._id !== this.selectedTransaction?._id });
+      this.selectedTransaction = undefined;
+    }, error => {
+      console.error(`deleteTransaction() failed: ${error.message}`);
+    });
   }
 
   refresh() {
     /*
     Pedir al servidor nuevamente todas las transacciones.
     */
-   this.getTransactions();
+    this.getTransactions();
   }
 
   create() {
     /*
     Crear una transaccion que luega será validada y enviada al servidor.
     */
-    
+
   }
 
   search() {
@@ -70,22 +88,28 @@ export class TransactionManagerComponent implements OnInit {
 
   }
 
-
   update() {
     /*
     Editar una transacción sin necesidad de autenticar.
     */
+    if (this.selectedTransaction !== undefined)
+      this.updateTransaction();
+
+    // Dejar mostrando un cargando...
+    // Para luego cuando se termine, aparezca un TICK al lado de la transacción o un mensaje spam?
+
+
+    // ¿Cómo evitar enviar 999823657234 PUT por segundo?
+    // Es decir, hay que ver si hubo algún campo modificado antes de hacer la solicitud
 
   }
 
   delete() {
     /*
-    Borrar las transacciones por id?
+    Borrar las transacciones por id.
     */
-
+    if (this.selectedTransaction !== undefined)
+      this.deleteTransaction();
   }
-
-
-
 
 }
