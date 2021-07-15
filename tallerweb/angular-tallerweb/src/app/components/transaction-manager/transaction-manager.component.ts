@@ -17,6 +17,7 @@ export class TransactionManagerComponent implements OnInit {
 
   public transactions: Transaction[] = [];
   public transaction: Transaction;
+  public createNew:boolean=false;
 
   constructor(private transactionService: TransactionService) {
     this.reverse = false;
@@ -83,7 +84,8 @@ export class TransactionManagerComponent implements OnInit {
 
   create() {
 
-    this.transactions.push(this.transaction)
+    //this.transactions.push(this.transaction)
+    this.createNew =true;
     /*
     Crear una transaccion que luega será validada y enviada al servidor.
     */
