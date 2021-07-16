@@ -5,17 +5,16 @@
 
   <!-- Botones superiores a la tabla -->
   <div class="d-flex my-sm-0 mx-sm-3">
-    <button class="btn btn-outline-light optionButtons" type="button"><img src="../../../assets/icons/refresh-cw.svg"
+    <button class="btn btn-primary optionButtons" type="button"><img src="../../../assets/icons/refresh-cw.svg"
         alt="Refrescar" title="Refrescar" width="24px" (click)="refresh()">
     </button>
-    <button class="btn btn-outline-light optionButtons" type="button"><img src="../../../assets/icons/file-plus.svg"
-        art="Crear" width="24px" title="Crear una transacción" (click)="create()">
-      <!-- routerLink="createTransaction" -->
+    <button class="btn optionButtons" type="button" id="createButton"><img src="../../../assets/icons/file-plus.svg"
+        art="Crear" width="24px" title="Crear una transacción" (click)="onCreate()">
     </button>
     <div class="input-group">
       <input type="text" class="form-control" placeholder="Buscar en base a un email, monto, id..."
-        aria-label="searchBox" aria-describedby="button-addon2">
-      <button class="btn btn-outline-secondary optionButtons" type="button" id="button-addon2"><img
+        aria-label="searchBox" aria-describedby="searchButton">
+      <button class="btn btn-outline-secondary optionButtons" type="button" id="searchButton"><img
           src="../../../assets/icons/search.svg" art="Buscar" width="24px" title="Buscar en el listado"
           (click)="search()"> </button>
     </div>
@@ -23,16 +22,17 @@
   </div>
 
   <br />
-
+<!-- 
   <div class="row">
-    <!-- Tabla de transacciones -->
-    <div class="col">
+    
+    <div class="col"> -->
+      <!-- Tabla de transacciones -->
       <div class="container-fluid">
         <div class="table-responsive">
           <table class="table table-striped table-hover align-middle" name="tableTransactions">
             <thead>
               <tr>
-                <th scope="col">
+                <th scope="col" style="min-width: 7%;">
                   <button type="button" class="btn btn-outline-light" (click)="sortBy('index')"><img
                       src="../../../assets/icons/hash.svg" alt="#" title="#" width="20px"></button>
                   <span class="sortOrder" *ngIf="propertyName === 'index'" [ngClass]="{reverse: reverse}"></span>
@@ -43,13 +43,13 @@
                   <span class="sortOrder" *ngIf="propertyName === 'email'" [ngClass]="{reverse: reverse}"></span>
                 </th>
 
-                <th scope="col">
+                <th scope="col" style="width: 15%;">
                   <button type="button" class="btn btn-outline-light" (click)="sortBy('mount')"><img
                       src="../../../assets/icons/dollar-sign.svg" alt="Monto" title="Monto" width="24px"></button>
                   <span class="sortOrder" *ngIf="propertyName === 'mount'" [ngClass]="{reverse: reverse}"></span>
                 </th>
 
-                <th scope="col">
+                <th scope="col" style="width: 15%;">
                   <button type="button" class="btn btn-outline-light" (click)="sortBy('source')"><img
                       src="../../../assets/img/card1.png" alt="Medio de Pago" title="Medio de Pago"
                       width="24px"></button>
@@ -62,20 +62,69 @@
                   <span class="sortOrder" *ngIf="propertyName === 'date'" [ngClass]="{reverse: reverse}"></span>
                 </th>
 
-                <th scope="col">
+                <th scope="col" style="width: 8%;">
                   <button type="button" class="btn btn-outline-light" (click)="sortBy('status')"><img
                       src="../../../assets/icons/check-circle.svg" alt="¿Pagado?" title="¿Pagado?"
                       width="24px"></button>
                   <span class="sortOrder" *ngIf="propertyName === 'status'" [ngClass]="{reverse: reverse}"></span>
                 </th>
-                <th scope="col">
+                <th scope="col" style="width: 12%;">
                   <div id="settingIcon">
                     <img src="../../../assets/icons/tool.svg" alt="Ajustes" title="Ajustes" width="24px">
                   </div>
                 </th>
               </tr>
             </thead>
-            <tbody id="transactionRows">
+            <tbody>
+              <tr *ngIf="toCreate">
+                <th scope="row" style="text-indent: 20%;">{{ transactions.length+1 }}</th>
+                <td>
+                  <label class="visually-hidden" for="inputEmail">E-mail</label>
+                  <input type="email" class="form-control ng-untouched ng-pristine ng-valid" id="inputEmail"
+                    placeholder="email@server.com" [(ngModel)]="inputEmail" name="inputEmail" required #name="ngModel">
+                  <div [hidden]="name.valid || name.pristine" class="alert alert-danger"></div>
+                </td>
+                <td>
+                  <div class="input-group">
+                    <div class="input-group-text">$</div>
+                    <label class="visually-hidden" for="inputMount">Monto</label>
+                    <input type="number" class="form-control ng-untouched ng-pristine ng-valid" id="inputMount"
+                      placeholder="" [(ngModel)]="inputMount" name="inputMount" required #name="ngModel">
+                    <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <label class="visually-hidden" for="inputSource">Medio de pago</label>
+                  <select class="form-select ng-untouched ng-pristine ng-valid" id="inputSource"
+                    [(ngModel)]="inputSource" name="inputSource">
+                    <!-- <option selected></option> -->
+                    <option value="MERCADOPAGO">MercadoPago</option>
+                    <option value="PAYPAL">PayPal</option>
+                    <option value="UALÁ">Ualá</option>
+                    <option value="MODO">Modo</option>
+                    }<option value="UPAY">UPay</option>
+                  </select>
+                </td>
+
+                <td>
+                  <input class="form-control" type="text" [value]="newTransaction?.date | date:'fullDate'" readonly>
+                </td>
+
+                <td>
+                  <input class="form-control" [value]="newTransaction?.status | uppercase" readonly>
+                </td>
+
+                <td style="text-align: center;">
+                  <button type="submit" class="btn btn-warning mx-1"><img src="../../../assets/icons/x-circle.svg"
+                      alt="Cancelar" title="Cancelar" width="24px" (click)="cancelCreate()"></button>
+
+                  <button type="submit" class="btn btn-success mx-1"><img src="../../../assets/icons/send.svg"
+                      alt="Enviar" title="Enviar" width="24px" (click)="create()"></button>
+                </td>
+
+              </tr>
               <!-- Angular's class binding can add and remove a CSS class conditionally. Add [class.some-css-class]="some-condition" to the element you want to style. -->
               <ng-template ngFor let-transaction [ngForOf]="transactions | sort:propertyName:reverse">
                 <tr>
@@ -86,15 +135,15 @@
                   <td>{{ transaction.date | date:"fullDate" }}</td>
                   <td style="max-width: fit-content;">{{ transaction.status | uppercase }}</td>
                   <td style="text-align: center;">
-                    <button type="button" class="btn btn-outline-light mx-1"><img src="../../../assets/icons/edit.svg"
+                    <button type="button" class="btn mx-1" id="editButton"><img src="../../../assets/icons/edit.svg"
                         art="Editar" width="24px" title="Editar" (click)="onSelect(transaction)"> </button>
-                    <button type="button" class="btn btn-outline-light mx-1"><img src="../../../assets/icons/delete.svg"
-                        art="Borrar" width="24px" title="Borrar" (click)="delete()"> </button>
+                    <button type="button" class="btn btn-danger mx-1"><img src="../../../assets/icons/delete.svg"
+                        art="Borrar" width="24px" title="Borrar" (click)="delete(transaction)"> </button>
                   </td>
                 </tr>
                 <tr *ngIf="transaction === selectedTransaction">
-                  <th scope="row" colspan="7" >
-                    <app-transaction-updater></app-transaction-updater>
+                  <th scope="row" colspan="7">
+                    <p>Edit</p>
                   </th>
                 </tr>
 
@@ -109,22 +158,8 @@
 
       </div>
     </div>
-  </div>
-
-  <!-- PRUEBAS -->
-
-  <h1></h1>
-
-  <div *ngIf="selectedTransaction">
-    <br style="margin-block: 10px;" />
-    <h2>{{selectedTransaction.email | uppercase}} Detalles</h2>
-    <div><span>Internal Id: </span>{{selectedTransaction._id}}</div>
-    <div>
-      <label for="t-mount">transaction mount: </label>
-      <input id="t-mount" [(ngModel)]="selectedTransaction.mount" placeholder="">
-    </div>
-
-  </div>
+<!--   </div>
 
 
-</div>
+
+</div> -->

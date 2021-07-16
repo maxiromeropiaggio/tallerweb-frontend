@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Transaction } from 'src/app/interfaces/transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
 
@@ -9,26 +9,36 @@ import { TransactionService } from 'src/app/services/transaction.service';
 })
 export class TransactionManagerComponent implements OnInit {
 
+  /* Filter attributes */
   public propertyName: string;
   public reverse: boolean;
+
+  /* Attribute used by update and delete methods */
   public selectedTransaction?: Transaction;
 
+  /* Attribute used by create methods */
+  public toCreate: boolean;
+  @Input() public newTransaction?: Transaction;
+  public inputEmail?: string;
+  public inputMount?: number;
+  public inputSource?: string;
+
+
+  /* Transaction's Array */
   public transactions: Transaction[] = [];
-  public transaction: Transaction;
+  
 
   constructor(private transactionService: TransactionService) {
     this.reverse = false;
     this.propertyName = "index";
-    this.transaction ={};
+    this.toCreate = false;
   }
 
   ngOnInit(): void {
     this.getTransactions();
-
   }
 
   title = 'Gestor de transacciones';
-  // ¿Cómo hago para pedir las transacciones al servidor?
 
   sortBy = (propertyName: string) => {
     this.reverse = (this.propertyName === propertyName) ? !this.reverse : false;
@@ -37,14 +47,12 @@ export class TransactionManagerComponent implements OnInit {
 
   onSelect(transaction: Transaction): void {
     this.selectedTransaction = transaction;
-    console.log(this.selectedTransaction);
-    
+    console.log(this.selectedTransaction); /* ----- */
   }
 
   async getTransactions() {
     await this.transactionService.getTransactions().subscribe(transactions => {
       this.transactions = transactions || [];
-      this.transaction = transactions[0]
     }, error => {
       this.transactions = [];
       console.error(`getTransactions() failed: ${error.message}`);
@@ -61,13 +69,23 @@ export class TransactionManagerComponent implements OnInit {
     });
   }
 
-  async deleteTransaction() {
-    await this.transactionService.deleteTransaction(this.selectedTransaction as Transaction).subscribe(next => {
+  async deleteTransaction(transaction: Transaction) {
+    await this.transactionService.deleteTransaction(transaction).subscribe(next => {
       console.log('The transaction was delete successfully.');
-      this.transactions = this.transactions.filter((t) => { return t._id !== this.selectedTransaction?._id });
-      this.selectedTransaction = undefined;
+      this.transactions = this.transactions.filter((t) => { return t._id !== transaction._id });
     }, error => {
       console.error(`deleteTransaction() failed: ${error.message}`);
+    });
+  }
+
+  async createTransaction() {
+    await this.transactionService.createTransaction(this.newTransaction as Transaction).subscribe(next => {
+      console.log('The transaction was created successfully.');
+      (this.newTransaction as Transaction)._id = next._id;
+      this.transactions.push(this.newTransaction as Transaction);
+      this.cancelCreate();
+    }, error => {
+      console.error(`createTransaction() failed: ${error.message}`);
     });
   }
 
@@ -78,13 +96,30 @@ export class TransactionManagerComponent implements OnInit {
     this.getTransactions();
   }
 
-  create() {
+  onCreate() {
+    this.newTransaction = {};
+    this.toCreate = true;
+    (this.newTransaction as Transaction).date = new Date(Date.now());
+    (this.newTransaction as Transaction).status = "IMPAGO"; /* ¿Se queda así? */
+    (this.newTransaction as Transaction).index = this.transactions.length + 1;
+  }
 
-    this.transactions.push(this.transaction)
+  create() {
     /*
     Crear una transaccion que luega será validada y enviada al servidor.
     */
+    (this.newTransaction as Transaction).email = this.inputEmail;
+    (this.newTransaction as Transaction).mount = this.inputMount;
+    (this.newTransaction as Transaction).source = this.inputSource;
+    this.createTransaction();
+  }
 
+  cancelCreate() {
+    this.toCreate = false;
+    this.newTransaction = undefined;
+    this.inputEmail = undefined;
+    this.inputMount = undefined;
+    this.inputSource = undefined;
   }
 
   search() {
@@ -111,12 +146,11 @@ export class TransactionManagerComponent implements OnInit {
 
   }
 
-  delete() {
+  delete(transaction: Transaction) {
     /*
     Borrar las transacciones por id.
     */
-    if (this.selectedTransaction !== undefined)
-      this.deleteTransaction();
+    this.deleteTransaction(transaction);
   }
 
 }

@@ -11,10 +11,6 @@ import { TransactionManagerComponent } from './components/transaction-manager/tr
 import { ContactComponent } from './components/contact/contact.component';
 
 import { SortPipe } from './pipes/sort.pipe';
-import { TransactionCreatorComponent } from './components/transaction-creator/transaction-creator.component';
-import { TransactionUpdaterComponent } from './components/transaction-updater/transaction-updater.component';
-
-
 
 @NgModule({
   declarations: [
@@ -23,9 +19,7 @@ import { TransactionUpdaterComponent } from './components/transaction-updater/tr
     PresentationComponent,
     TransactionManagerComponent,
     ContactComponent,
-    SortPipe,
-    TransactionCreatorComponent,
-    TransactionUpdaterComponent
+    SortPipe
   ],
   imports: [
     BrowserModule,
