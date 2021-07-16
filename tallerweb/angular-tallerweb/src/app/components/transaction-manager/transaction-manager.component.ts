@@ -9,7 +9,9 @@ import { TransactionService } from 'src/app/services/transaction.service';
 })
 export class TransactionManagerComponent implements OnInit {
 
-  /* Filter attributes */
+  @Input() searchBox: string='';
+
+  /* Filter attributes */  
   public propertyName: string;
   public reverse: boolean;
 
@@ -122,7 +124,9 @@ export class TransactionManagerComponent implements OnInit {
     this.inputSource = undefined;
   }
 
-  search() {
+  search(event:any) {
+    console.log(event );
+    
     /*
     Buscar por los atributos mostrados en pantalla:
     - email - medio de pago - pagado - monto
