@@ -15,9 +15,6 @@ export class TransactionManagerComponent implements OnInit {
   public propertyName: string;
   public reverse: boolean;
 
-  /* Attribute used by update and delete methods */
-  public selectedTransaction?: Transaction;
-
   /* Attribute used by create methods */
   public toCreate: boolean;
   @Input() public newTransaction?: Transaction;
@@ -25,11 +22,15 @@ export class TransactionManagerComponent implements OnInit {
   public inputMount?: number;
   public inputSource?: string;
 
+  /* Attribute used by update method */
+  public selectedTransaction?: Transaction;
+  public newTime?: Date;
+  public inputStatus?: string;
 
   /* Transaction's Array */
   public transactions: Transaction[] = [];
   
-
+  
   constructor(private transactionService: TransactionService) {
     this.reverse = false;
     this.propertyName = "index";
@@ -49,7 +50,7 @@ export class TransactionManagerComponent implements OnInit {
 
   onSelect(transaction: Transaction): void {
     this.selectedTransaction = transaction;
-    console.log(this.selectedTransaction); /* ----- */
+    this.newTime = new Date(Date.now());
   }
 
   async getTransactions() {
@@ -65,7 +66,7 @@ export class TransactionManagerComponent implements OnInit {
   async updateTransaction() {
     await this.transactionService.updateTransaction(this.selectedTransaction as Transaction).subscribe(next => {
       console.log('The transaction was update successfully.');
-      this.selectedTransaction = undefined;
+      this.cancelUpdate();
     }, error => {
       console.error(`updateTransaction() failed: ${error.message}`);
     });
@@ -92,9 +93,6 @@ export class TransactionManagerComponent implements OnInit {
   }
 
   refresh() {
-    /*
-    Pedir al servidor nuevamente todas las transacciones.
-    */
     this.getTransactions();
   }
 
@@ -107,25 +105,26 @@ export class TransactionManagerComponent implements OnInit {
   }
 
   create() {
-    /*
-    Crear una transaccion que luega será validada y enviada al servidor.
-    */
     (this.newTransaction as Transaction).email = this.inputEmail;
     (this.newTransaction as Transaction).mount = this.inputMount;
     (this.newTransaction as Transaction).source = this.inputSource;
     this.createTransaction();
   }
 
-  cancelCreate() {
-    this.toCreate = false;
-    this.newTransaction = undefined;
+  cleanInputs() {
     this.inputEmail = undefined;
     this.inputMount = undefined;
     this.inputSource = undefined;
+    this.inputStatus = undefined;
+  }
+
+  cancelCreate() {
+    this.toCreate = false;
+    this.newTransaction = undefined;
   }
 
   search(event:any) {
-    console.log(event );
+    console.log(event);
     
     /*
     Buscar por los atributos mostrados en pantalla:
@@ -134,26 +133,20 @@ export class TransactionManagerComponent implements OnInit {
 
   }
 
+  cancelUpdate() {
+    this.selectedTransaction = undefined;
+    this.cleanInputs();
+    this.newTime = undefined;
+  }
+
   update() {
-    /*
-    Editar una transacción sin necesidad de autenticar.
-    */
-    if (this.selectedTransaction !== undefined)
-      this.updateTransaction();
-
-    // Dejar mostrando un cargando...
-    // Para luego cuando se termine, aparezca un TICK al lado de la transacción o un mensaje spam?
-
-
-    // ¿Cómo evitar enviar 999823657234 PUT por segundo?
-    // Es decir, hay que ver si hubo algún campo modificado antes de hacer la solicitud
-
+    (this.selectedTransaction as Transaction).mount = this.inputMount;
+    (this.selectedTransaction as Transaction).date = this.newTime;
+    (this.selectedTransaction as Transaction).status = this.inputStatus;
+    this.updateTransaction();
   }
 
   delete(transaction: Transaction) {
-    /*
-    Borrar las transacciones por id.
-    */
     this.deleteTransaction(transaction);
   }
 

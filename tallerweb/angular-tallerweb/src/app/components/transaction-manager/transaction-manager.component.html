@@ -71,6 +71,7 @@
           </tr>
         </thead>
         <tbody>
+
           <tr *ngIf="toCreate">
             <th scope="row" style="text-indent: 20%;">{{ transactions.length+1 }}</th>
             <td>
@@ -104,7 +105,7 @@
             </td>
 
             <td>
-              <input class="form-control" type="text" [value]="newTransaction?.date | date:'fullDate'" readonly>
+              <input class="form-control" type="text" [value]="newTransaction?.date | date:'medium'" readonly>
             </td>
 
             <td>
@@ -120,6 +121,7 @@
             </td>
 
           </tr>
+
           <!-- Angular's class binding can add and remove a CSS class conditionally. Add [class.some-css-class]="some-condition" to the element you want to style. -->
           <ng-template ngFor let-transaction [ngForOf]="transactions | sort:propertyName:reverse">
             <tr>
@@ -127,7 +129,7 @@
               <td>{{ transaction.email }}</td>
               <td style="text-indent: 5%;">{{ transaction.mount | currency }}</td>
               <td>{{ transaction.source | uppercase }}</td>
-              <td>{{ transaction.date | date:"fullDate" }}</td>
+              <td>{{ transaction.date | date:"medium" }}</td>
               <td style="max-width: fit-content;">{{ transaction.status | uppercase }}</td>
               <td style="text-align: center;">
                 <button type="button" class="btn mx-1" id="editButton"><img src="../../../assets/icons/edit.svg"
@@ -136,12 +138,58 @@
                     art="Borrar" width="24px" title="Borrar" (click)="delete(transaction)"> </button>
               </td>
             </tr>
-            <tr *ngIf="transaction === selectedTransaction">
-              <th scope="row" colspan="7">
-                <p>Edit</p>
-              </th>
-            </tr>
 
+            <tr *ngIf="transaction === selectedTransaction">
+              <th scope="row" style="text-indent: 20%;"></th>
+                  <td>
+                    <input type="email" class="form-control" [value]="selectedTransaction?.email" readonly>
+                  </td>
+                  <td>
+                    <div class="input-group">
+                      <div class="input-group-text">$</div>
+                      <label class="visually-hidden" for="inputMount">Monto</label>
+                      <input type="number" class="form-control ng-untouched ng-pristine ng-valid" id="inputMount"
+                        placeholder="" [(ngModel)]="inputMount" name="inputMount" required #name="ngModel">
+                      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                      </div>
+                    </div>
+                  </td>
+      
+                  <td>
+                    <label class="visually-hidden" for="inputSource">Medio de pago</label>
+                    <select class="form-select ng-untouched ng-pristine ng-valid" id="inputSource" [(ngModel)]="inputSource"
+                      name="inputSource">
+                      <!-- <option selected></option> -->
+                      <option value="MERCADOPAGO">MercadoPago</option>
+                      <option value="PAYPAL">PayPal</option>
+                      <option value="UALÁ">Ualá</option>
+                      <option value="MODO">Modo</option>
+                      <option value="UPAY">UPay</option>
+                    </select>
+                  </td>
+      
+                  <td>
+                    <input class="form-control" type="text" [value]="newTime | date:'medium'" readonly>
+                  </td>
+      
+                  <td>
+                    <label class="visually-hidden" for="inputStatus">Medio de pago</label>
+                    <select class="form-select ng-untouched ng-pristine ng-valid" id="inputStatus" [(ngModel)]="inputStatus"
+                      name="inputSource">
+                      <option value="PAGO">Pago</option>
+                      <option value="IMPAGO">Impago</option>
+                    </select>
+                  </td>
+      
+                  <td style="text-align: center;">
+                    <button type="submit" class="btn btn-warning mx-1"><img src="../../../assets/icons/x-circle.svg"
+                        alt="Cancelar" title="Cancelar" width="24px" (click)="cancelUpdate()"></button>
+      
+                    <button type="submit" class="btn btn-success mx-1"><img src="../../../assets/icons/send.svg" alt="Enviar"
+                        title="Enviar" width="24px" (click)="update()"></button>
+                  </td>
+      
+                </tr>
           </ng-template>
 
 
