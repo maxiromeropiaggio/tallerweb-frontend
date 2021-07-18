@@ -9,11 +9,14 @@ import { TransactionService } from 'src/app/services/transaction.service';
 })
 export class TransactionManagerComponent implements OnInit {
 
-  @Input() searchBox: string='';
+  @Input() searchBox: string = '';
 
-  /* Filter attributes */  
+  /* Filter attributes */
   public propertyName: string;
   public reverse: boolean;
+
+  /* Search attribute */
+  public filterTerm: string;
 
   /* Attribute used by create methods */
   public toCreate: boolean;
@@ -29,12 +32,13 @@ export class TransactionManagerComponent implements OnInit {
 
   /* Transaction's Array */
   public transactions: Transaction[] = [];
-  
-  
+
+
   constructor(private transactionService: TransactionService) {
     this.reverse = false;
     this.propertyName = "index";
     this.toCreate = false;
+    this.filterTerm = "";
   }
 
   ngOnInit(): void {
@@ -72,10 +76,19 @@ export class TransactionManagerComponent implements OnInit {
     });
   }
 
+  private updateIndex() {
+    let i: number = 1;
+    for (const t of this.transactions) {
+      t.index = i;
+      i++;
+    }
+  }
+
   async deleteTransaction(transaction: Transaction) {
     await this.transactionService.deleteTransaction(transaction).subscribe(next => {
       console.log('The transaction was delete successfully.');
       this.transactions = this.transactions.filter((t) => { return t._id !== transaction._id });
+      this.updateIndex();
     }, error => {
       console.error(`deleteTransaction() failed: ${error.message}`);
     });
@@ -100,7 +113,7 @@ export class TransactionManagerComponent implements OnInit {
     this.newTransaction = {};
     this.toCreate = true;
     (this.newTransaction as Transaction).date = new Date(Date.now());
-    (this.newTransaction as Transaction).status = "IMPAGO"; /* ¿Se queda así? */
+    (this.newTransaction as Transaction).status = "IMPAGO";
     (this.newTransaction as Transaction).index = this.transactions.length + 1;
   }
 
@@ -121,16 +134,6 @@ export class TransactionManagerComponent implements OnInit {
   cancelCreate() {
     this.toCreate = false;
     this.newTransaction = undefined;
-  }
-
-  search(event:any) {
-    console.log(event);
-    
-    /*
-    Buscar por los atributos mostrados en pantalla:
-    - email - medio de pago - pagado - monto
-    */
-
   }
 
   cancelUpdate() {

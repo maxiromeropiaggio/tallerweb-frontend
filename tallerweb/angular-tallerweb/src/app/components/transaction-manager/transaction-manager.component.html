@@ -12,11 +12,10 @@
         art="Crear" width="24px" title="Crear una transacción" (click)="onCreate()">
     </button>
     <div class="input-group">
-      <input id="buscarCampo" #searchBox type="text" class="form-control"
+      <input type="text" class="form-control" [(ngModel)]="filterTerm"
         placeholder="Buscar en base a un email, monto, id..." aria-label="searchBox" aria-describedby="searchButton">
-      <button class="btn btn-outline-secondary optionButtons" type="button" id="searchButton"><img
-          src="../../../assets/icons/search.svg" art="Buscar" width="24px" title="Buscar en el listado"
-          (click)="search(searchBox.value)"> </button>
+      <button class="btn btn-outline-secondary optionButtons" type="button" id="searchButton" disabled><img
+          src="../../../assets/icons/search.svg" art="Buscar" width="24px" title="Buscar"> </button>
     </div>
 
   </div>
@@ -123,7 +122,7 @@
           </tr>
 
           <!-- Angular's class binding can add and remove a CSS class conditionally. Add [class.some-css-class]="some-condition" to the element you want to style. -->
-          <ng-template ngFor let-transaction [ngForOf]="transactions | sort:propertyName:reverse">
+          <ng-template ngFor let-transaction [ngForOf]="transactions | filter:filterTerm | sort:propertyName:reverse">
             <tr>
               <th scope="row" style="text-indent: 20%;">{{ transaction.index }}</th>
               <td>{{ transaction.email }}</td>
