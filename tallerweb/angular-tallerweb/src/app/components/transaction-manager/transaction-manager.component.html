@@ -4,13 +4,19 @@
 <div class="container-fluid">
 
   <!-- Botones superiores a la tabla -->
+
+  <!-- Refrescar la tabla -->
   <div class="d-flex my-sm-0 mx-sm-3">
     <button class="btn btn-primary optionButtons" type="button"><img src="../../../assets/icons/refresh-cw.svg"
         alt="Refrescar" title="Refrescar" width="24px" (click)="refresh()">
     </button>
+
+    <!-- Crear una transacción -->
     <button class="btn optionButtons" type="button" id="createButton"><img src="../../../assets/icons/file-plus.svg"
         art="Crear" width="24px" title="Crear una transacción" (click)="onCreate()">
     </button>
+
+    <!-- Búsqueda de transacciones -->
     <div class="input-group">
       <input type="text" class="form-control" [(ngModel)]="filterTerm"
         placeholder="Buscar en base a un email, monto, id..." aria-label="searchBox" aria-describedby="searchButton">
@@ -26,6 +32,8 @@
   <div class="container-fluid">
     <div class="table-responsive">
       <table class="table table-striped table-hover align-middle" name="tableTransactions">
+
+        <!-- Encabezado de la tabla, la cual puede ordenar los datos por columna -->
         <thead>
           <tr>
             <th scope="col" style="min-width: 7%;">
@@ -71,35 +79,36 @@
         </thead>
         <tbody>
 
+          <!-- Crear una transacción -->
           <tr *ngIf="toCreate">
             <th scope="row" style="text-indent: 20%;">{{ transactions.length+1 }}</th>
             <td>
               <label class="visually-hidden" for="inputEmail">E-mail</label>
               <input type="email" class="form-control ng-untouched ng-pristine ng-valid" id="inputEmail"
                 placeholder="email@server.com" [(ngModel)]="inputEmail" name="inputEmail" required #name="ngModel">
-              <div [hidden]="name.valid || name.pristine" class="alert alert-danger"></div>
+              <div [hidden]="name.valid || name.pristine" class="alert alert-danger">El campo no puede ser vacío.</div>
             </td>
             <td>
               <div class="input-group">
                 <div class="input-group-text">$</div>
                 <label class="visually-hidden" for="inputMount">Monto</label>
                 <input type="number" class="form-control ng-untouched ng-pristine ng-valid" id="inputMount"
-                  placeholder="" [(ngModel)]="inputMount" name="inputMount" required #name="ngModel">
-                <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                  placeholder="" [(ngModel)]="inputMount" name="inputMount" required #name2="ngModel">
+                <div [hidden]="name2.valid || name2.pristine" class="alert alert-danger">El campo es vacío o no válido
+                  (solo números).
                 </div>
               </div>
             </td>
 
             <td>
               <label class="visually-hidden" for="inputSource">Medio de pago</label>
-              <select class="form-select ng-untouched ng-pristine ng-valid" id="inputSource" [(ngModel)]="inputSource"
-                name="inputSource">
-                <!-- <option selected></option> -->
+              <select class="form-select" id="inputSource" [(ngModel)]="inputSource"
+                name="inputSource" required>
                 <option value="MERCADOPAGO">MercadoPago</option>
                 <option value="PAYPAL">PayPal</option>
                 <option value="UALÁ">Ualá</option>
                 <option value="MODO">Modo</option>
-                }<option value="UPAY">UPay</option>
+                <option value="UPAY">UPay</option>
               </select>
             </td>
 
@@ -121,6 +130,8 @@
 
           </tr>
 
+          <!-- Mostrar todas las transacciones solicitadas al servidor, junto con opciones de actualizar o borrar -->
+
           <!-- Angular's class binding can add and remove a CSS class conditionally. Add [class.some-css-class]="some-condition" to the element you want to style. -->
           <ng-template ngFor let-transaction [ngForOf]="transactions | filter:filterTerm | sort:propertyName:reverse">
             <tr>
@@ -131,73 +142,78 @@
               <td>{{ transaction.date | date:"medium" }}</td>
               <td style="max-width: fit-content;">{{ transaction.status | uppercase }}</td>
               <td style="text-align: center;">
-                <button type="button" class="btn mx-1" id="editButton"><img src="../../../assets/icons/edit.svg"
-                    art="Editar" width="24px" title="Editar" (click)="onSelect(transaction)"> </button>
-                <button type="button" class="btn btn-danger mx-1"><img src="../../../assets/icons/delete.svg"
-                    art="Borrar" width="24px" title="Borrar" (click)="delete(transaction)"> </button>
-              </td>
+                <ng-template [ngIf]="(!toDelete && (selectedTransaction === undefined || transaction !== selectedTransaction)) || (toDelete && transaction !== selectedTransaction)">
+                  <button type="button" class="btn mx-1" id="editButton"><img src="../../../assets/icons/edit.svg"
+                      art="Editar" width="24px" title="Editar" (click)="onUpdate(transaction)"> </button>
+                  <button type="button" class="btn btn-danger mx-1"><img src="../../../assets/icons/delete.svg"
+                      art="Borrar" width="24px" title="Borrar" (click)="onDelete(transaction)"> </button>
+                </ng-template>
+                <ng-template [ngIf]="transaction === selectedTransaction && toDelete">
+                  <p>¿Confirma eliminar la transacción?</p>
+                  <button type="submit" class="btn btn-warning mx-1"><img src="../../../assets/icons/x-square.svg"
+                      alt="Cancelar" title="Cancelar" width="20px" (click)="toConfirmDelete(false); onSelect({})"></button>
+
+                  <button type="submit" class="btn btn-success mx-1"><img src="../../../assets/icons/check.svg"
+                      alt="Aceptar" title="Aceptar" width="20px" (click)="delete(transaction)"></button>
+                </ng-template>
             </tr>
 
-            <tr *ngIf="transaction === selectedTransaction">
+            <!-- Actualizar una transacción -->
+            <tr *ngIf="transaction === selectedTransaction && !toDelete">
               <th scope="row" style="text-indent: 20%;"></th>
-                  <td>
-                    <input type="email" class="form-control" [value]="selectedTransaction?.email" readonly>
-                  </td>
-                  <td>
-                    <div class="input-group">
-                      <div class="input-group-text">$</div>
-                      <label class="visually-hidden" for="inputMount">Monto</label>
-                      <input type="number" class="form-control ng-untouched ng-pristine ng-valid" id="inputMount"
-                        placeholder="" [(ngModel)]="inputMount" name="inputMount" required #name="ngModel">
-                      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-                      </div>
-                    </div>
-                  </td>
-      
-                  <td>
-                    <label class="visually-hidden" for="inputSource">Medio de pago</label>
-                    <select class="form-select ng-untouched ng-pristine ng-valid" id="inputSource" [(ngModel)]="inputSource"
-                      name="inputSource">
-                      <!-- <option selected></option> -->
-                      <option value="MERCADOPAGO">MercadoPago</option>
-                      <option value="PAYPAL">PayPal</option>
-                      <option value="UALÁ">Ualá</option>
-                      <option value="MODO">Modo</option>
-                      <option value="UPAY">UPay</option>
-                    </select>
-                  </td>
-      
-                  <td>
-                    <input class="form-control" type="text" [value]="newTime | date:'medium'" readonly>
-                  </td>
-      
-                  <td>
-                    <label class="visually-hidden" for="inputStatus">Medio de pago</label>
-                    <select class="form-select ng-untouched ng-pristine ng-valid" id="inputStatus" [(ngModel)]="inputStatus"
-                      name="inputSource">
-                      <option value="PAGO">Pago</option>
-                      <option value="IMPAGO">Impago</option>
-                    </select>
-                  </td>
-      
-                  <td style="text-align: center;">
-                    <button type="submit" class="btn btn-warning mx-1"><img src="../../../assets/icons/x-circle.svg"
-                        alt="Cancelar" title="Cancelar" width="24px" (click)="cancelUpdate()"></button>
-      
-                    <button type="submit" class="btn btn-success mx-1"><img src="../../../assets/icons/send.svg" alt="Enviar"
-                        title="Enviar" width="24px" (click)="update()"></button>
-                  </td>
-      
-                </tr>
+              <td>
+                <input type="email" class="form-control" [value]="selectedTransaction?.email" readonly>
+              </td>
+              <td>
+                <div class="input-group">
+                  <div class="input-group-text">$</div>
+                  <label class="visually-hidden" for="inputMount">Monto</label>
+                  <input type="number" class="form-control ng-untouched ng-pristine ng-valid" id="inputMount"
+                    placeholder="" [(ngModel)]="inputMount" name="inputMount" required #name="ngModel">
+                  <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                    El campo es vacío o no válido (solo números).
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <label class="visually-hidden" for="inputSource">Medio de pago</label>
+                <select class="form-select ng-untouched ng-pristine ng-valid" id="inputSource" [(ngModel)]="inputSource"
+                  name="inputSource" [value]="selectedTransaction?.source" required>
+                  <option value="MERCADOPAGO">MercadoPago</option>
+                  <option value="PAYPAL">PayPal</option>
+                  <option value="UALÁ">Ualá</option>
+                  <option value="MODO">Modo</option>
+                  <option value="UPAY">UPay</option>
+                </select>
+              </td>
+
+              <td>
+                <input class="form-control" type="text" [value]="newTime | date:'medium'" readonly>
+              </td>
+
+              <td>
+                <label class="visually-hidden" for="inputStatus">Medio de pago</label>
+                <select class="form-select ng-untouched ng-pristine ng-valid" id="inputStatus" [(ngModel)]="inputStatus"
+                  name="inputSource" [value]="selectedTransaction?.status" required>
+                  <option value="PAGO">Pago</option>
+                  <option value="IMPAGO">Impago</option>
+                </select>
+              </td>
+
+              <td style="text-align: center;">
+                <button type="submit" class="btn btn-warning mx-1"><img src="../../../assets/icons/x-circle.svg"
+                    alt="Cancelar" title="Cancelar" width="24px" (click)="cancelUpdate()"></button>
+
+                <button type="submit" class="btn btn-success mx-1"><img src="../../../assets/icons/send.svg"
+                    alt="Enviar" title="Enviar" width="24px" (click)="update()"></button>
+              </td>
+
+            </tr>
           </ng-template>
-
-
 
         </tbody>
       </table>
-
     </div>
-
-
   </div>
 </div>
